@@ -4,6 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>C2STEM</title>
     <link rel="stylesheet" href="styles/styles.css">
+
+
     <link rel="shortcut icon" href="netsblox/favicon.ico">
     <script type="text/javascript" src="netsblox/morphic.js"></script>
     <script type="text/javascript" src="netsblox/widgets.js"></script>
@@ -40,8 +42,19 @@
     </script>
 </head>
 <body>
-<div id="canvasHolder">
-    <canvas id="netsblox" />
+<div id="app">
+    <p>{{ message }}</p>
 </div>
+<div id="canvasHolder">
+    <canvas id="netsblox"/>
+</div>
+
 </body>
+
+
+<script type="text/javascript" src="lib/vue.js"></script>
+<script type="text/javascript" src="scripts/main.js"></script>
+<script type="text/javascript" src="scripts/conceptmodel.js"></script>
+
+
 </html>
