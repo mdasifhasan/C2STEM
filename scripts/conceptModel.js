@@ -2,6 +2,6 @@ Vue.use(Keen);
 new Vue({
     el: '#conceptmodel',
     data: {
-        message: 'Hello Vue.js!'
+        message: 'Hello C2STEM!'
     }
 });
