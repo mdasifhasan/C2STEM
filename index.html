@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>C2STEM</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="shortcut icon" href="netsblox/favicon.ico">
+    <script type="text/javascript" src="netsblox/morphic.js"></script>
+    <script type="text/javascript" src="netsblox/widgets.js"></script>
+    <script type="text/javascript" src="netsblox/blocks.js"></script>
+    <script type="text/javascript" src="netsblox/threads.js"></script>
+    <script type="text/javascript" src="netsblox/objects.js"></script>
+    <script type="text/javascript" src="netsblox/gui.js"></script>
+    <script type="text/javascript" src="netsblox/paint.js"></script>
+    <script type="text/javascript" src="netsblox/lists.js"></script>
+    <script type="text/javascript" src="netsblox/byob.js"></script>
+    <script type="text/javascript" src="netsblox/tables.js"></script>
+    <script type="text/javascript" src="netsblox/xml.js"></script>
+    <script type="text/javascript" src="netsblox/store.js"></script>
+    <script type="text/javascript" src="netsblox/locale.js"></script>
+    <script type="text/javascript" src="netsblox/cloud.js"></script>
+    <script type="text/javascript" src="netsblox/sha512.js"></script>
+    <script type="text/javascript" src="netsblox/p2.js"></script>
+    <script type="text/javascript" src="netsblox/physics.js"></script>
+    <script type="text/javascript" src="netsblox/FileSaver.min.js"></script>
+    <script type="text/javascript">
+        var world;
+        var ide;
+        window.onload = function () {
+            world = new WorldMorph(document.getElementById('netsblox'));
+            world.worldCanvas.focus();
+            ide = new IDE_Morph().openIn(world);
+            loop();
+        };
+        function loop() {
+            requestAnimationFrame(loop);
+            world.doOneCycle();
+        }
+
+    </script>
+</head>
+<body>
+<div id="canvasHolder">
+    <canvas id="netsblox" />
+</div>
+</body>
+</html>
