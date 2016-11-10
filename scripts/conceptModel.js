@@ -1,6 +1,7 @@
+Vue.use(Keen);
 new Vue({
-    el: '#app',
+    el: '#conceptmodel',
     data: {
         message: 'Hello Vue.js!'
     }
-})
+});

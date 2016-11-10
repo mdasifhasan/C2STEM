@@ -5,6 +5,9 @@
     <title>C2STEM</title>
     <link rel="stylesheet" href="styles/styles.css">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="node_modules/keen-ui/dist/keen-ui.css">
+
 
     <link rel="shortcut icon" href="netsblox/favicon.ico">
     <script type="text/javascript" src="netsblox/morphic.js"></script>
@@ -42,19 +45,29 @@
     </script>
 </head>
 <body>
-<div id="app">
-    <p>{{ message }}</p>
+
+<div id="main">
+    <div id="conceptmodel">
+        <ui-button>{{ message }}</ui-button>
+    </div>
 </div>
 <div id="canvasHolder">
     <canvas id="netsblox"/>
 </div>
 
-</body>
-
 
 <script type="text/javascript" src="lib/vue.js"></script>
+<script src="node_modules/keen-ui/dist/keen-ui.js"></script>
+<!--<script src="node_modules/keen-ui/lib/UiButton.js"></script>-->
+
+
+<script type="text/javascript" src="scripts/conceptModel.js"></script>
 <script type="text/javascript" src="scripts/main.js"></script>
-<script type="text/javascript" src="scripts/conceptmodel.js"></script>
+
+
+
+</body>
+
 
 
 </html>
