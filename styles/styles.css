@@ -1,28 +1,28 @@
 /*body {*/
-    /*height: 100%;*/
-    /*width: 100%;*/
-    /*overflow: auto;*/
-    /*margin: 0%;*/
-    /*background: black;*/
+/*height: 100%;*/
+/*width: 100%;*/
+/*overflow: auto;*/
+/*margin: 0%;*/
+/*background: black;*/
 /*}*/
 
 /*!*#canvasHolder {*!*/
-    /*!*position: absolute;*!*/
-    /*!*top: 6%;*!*/
-    /*!*width: 100%;*!*/
-    /*!*height: 93%;*!*/
-    /*!*margin: 0%;*!*/
-    /*!*left: 0%;*!*/
+/*!*position: absolute;*!*/
+/*!*top: 6%;*!*/
+/*!*width: 100%;*!*/
+/*!*height: 93%;*!*/
+/*!*margin: 0%;*!*/
+/*!*left: 0%;*!*/
 /*!*}*!*/
 
 /*.c2stemtab {*/
-    /*position: absolute;*/
-    /*top: 6%;*/
-    /*width: 100%;*/
-    /*height: 93%;*/
-    /*margin: 0%;*/
-    /*left: 0%;*/
-    /*background: black;*/
+/*position: absolute;*/
+/*top: 6%;*/
+/*width: 100%;*/
+/*height: 93%;*/
+/*margin: 0%;*/
+/*left: 0%;*/
+/*background: black;*/
 /*}*/
 
 #netsblox {
@@ -32,11 +32,10 @@
     height: 100%;
 }
 
-
-#lower {
+#conceptModelView {
     width: 100%;
     position: absolute;
-    left:0;
+    left: 0;
     bottom: 0;
 }
 
@@ -46,13 +45,12 @@
     display: inline-block;
 }
 
-#panel {
+#conceptModelPanel {
     display: none;
-    /*    height: 100px;*/
     background-color: #aaaaaa;
-    padding: 10px;
+    height:342px;
+    overflow: auto;
 }
-
 
 .glyphicon.glyphicon-collapse-up {
     font-size: 35px;
@@ -62,5 +60,18 @@
     font-size: 35px;
 }
 
+.row{
+    margin-left: inherit;
+    margin-right: inherit;
+}
 
+.panel{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.conceptPanelBody{
+    height:280px;
+    overflow: auto;
+}
 

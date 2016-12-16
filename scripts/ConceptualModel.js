@@ -2,8 +2,8 @@
  * Created by hasanm on 12/16/2016.
  */
 $(document).ready(function () {
-    $("#toggle").click(function () {
-        $("#panel").slideToggle("slow", function () {
+    $("#conceptModelButton").click(function () {
+        $("#conceptModelPanel").slideToggle("slow", function () {
             if($(this).is(':hidden')){
                 $("#conceptModelIcon").removeClass(".glyphicon glyphicon-collapse-down").addClass("glyphicon glyphicon-collapse-up");
             }else{
