@@ -51,7 +51,10 @@
     <ui-tabs  type="text" style = "background: black">
         <ui-tab class="c2stemtab" header="Conceptual Modeling">
             <div id="conceptmodel">
-                <ui-button>{{ message }}</ui-button>
+                <p style="color: white">Select Agents</p>
+                <ui-checkbox style="color: white"  name="Agents" :model.sync="check" >Car</ui-checkbox>
+                <!--<ui-button>{{ message }}</ui-button>-->
+                <pre><code  style="color: white"   v-text="agents | json"></code></pre>
             </div>
         </ui-tab>
 
