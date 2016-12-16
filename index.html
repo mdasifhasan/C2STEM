@@ -2,84 +2,29 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>C2STEM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script src="scripts/ConceptualModel.js"></script>
     <link rel="stylesheet" href="styles/styles.css">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="node_modules/keen-ui/dist/keen-ui.css">
-
-
-    <!--<link rel="shortcut icon" href="netsblox/favicon.ico">-->
-    <!--<script type="text/javascript" src="netsblox/morphic.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/widgets.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/blocks.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/threads.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/objects.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/gui.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/paint.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/lists.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/byob.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/tables.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/xml.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/store.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/locale.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/cloud.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/sha512.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/p2.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/physics.js"></script>-->
-    <!--<script type="text/javascript" src="netsblox/FileSaver.min.js"></script>-->
-    <!--<script type="text/javascript">-->
-        <!--var world;-->
-        <!--var ide;-->
-        <!--window.onload = function () {-->
-            <!--world = new WorldMorph(document.getElementById('netsblox'));-->
-            <!--world.worldCanvas.focus();-->
-            <!--ide = new IDE_Morph().openIn(world);-->
-            <!--loop();-->
-        <!--};-->
-        <!--function loop() {-->
-            <!--requestAnimationFrame(loop);-->
-            <!--world.doOneCycle();-->
-        <!--}-->
-
-    <!--</script>-->
+    <title>C2STEM</title>
 </head>
+
 <body>
-
-<div id="main">
-
-    <ui-tabs  type="text" style = "background: black">
-        <ui-tab class="c2stemtab" header="Conceptual Modeling">
-            <div id="conceptmodel">
-                <p style="color: white">Select Agents</p>
-                <ui-checkbox style="color: white"  name="Agents" :model.sync="check" >Car</ui-checkbox>
-                <!--<ui-button>{{ message }}</ui-button>-->
-                <pre><code  style="color: white"   v-text="agents | json"></code></pre>
-            </div>
-        </ui-tab>
-
-        <ui-tab class="c2stemtab" header="Computational Modeling">
-            <div id="canvasHolder">
-                <iframe src="netsblox/snap.html" id="netsblox"></iframe>
-                <!--<canvas id="netsblox"/>-->
-            </div>
-        </ui-tab>
-    </ui-tabs>
-
-
+<div class="container-fluid">
+    <iframe src="netsblox/snap.html" id="netsblox"></iframe>
+    <div id="lower">
+        <div id="conceptModelBar" ><a href="#" id="toggle"><span id="conceptModelIcon"class="glyphicon glyphicon-collapse-up"></span></a></div>
+        <div id="panel">
+            <p>Content of the drawer</p>
+        </div>
+    </div>
 </div>
 
-
-<script type="text/javascript" src="lib/vue.js"></script>
-<script src="node_modules/keen-ui/dist/keen-ui.js"></script>
-<!--<script src="node_modules/keen-ui/lib/UiButton.js"></script>-->
-
-
-<script type="text/javascript" src="scripts/conceptModel.js"></script>
-<script type="text/javascript" src="scripts/main.js"></script>
-
-
 </body>
-
-
 </html>

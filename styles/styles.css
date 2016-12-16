@@ -1,35 +1,65 @@
-body {
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    margin: 0%;
-    background: black;
-}
+/*body {*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*overflow: auto;*/
+    /*margin: 0%;*/
+    /*background: black;*/
+/*}*/
 
-/*#canvasHolder {*/
+/*!*#canvasHolder {*!*/
+    /*!*position: absolute;*!*/
+    /*!*top: 6%;*!*/
+    /*!*width: 100%;*!*/
+    /*!*height: 93%;*!*/
+    /*!*margin: 0%;*!*/
+    /*!*left: 0%;*!*/
+/*!*}*!*/
+
+/*.c2stemtab {*/
     /*position: absolute;*/
     /*top: 6%;*/
     /*width: 100%;*/
     /*height: 93%;*/
     /*margin: 0%;*/
     /*left: 0%;*/
+    /*background: black;*/
 /*}*/
 
 #netsblox {
     position: absolute;
-    width: 99.5%;
-    left: .25%;
+    width: 100%;
+    left: 0;
     height: 100%;
 }
 
-.c2stemtab {
-    position: absolute;
-    top: 6%;
+
+#lower {
     width: 100%;
-    height: 93%;
-    margin: 0%;
-    left: 0%;
-    background: black;
+    position: absolute;
+    left:0;
+    bottom: 0;
+}
+
+#conceptModelBar {
+    position: relative;
+    left: 50%;
+    display: inline-block;
+}
+
+#panel {
+    display: none;
+    /*    height: 100px;*/
+    background-color: #aaaaaa;
+    padding: 10px;
+}
+
+
+.glyphicon.glyphicon-collapse-up {
+    font-size: 35px;
+}
+
+.glyphicon.glyphicon-collapse-down {
+    font-size: 35px;
 }
 
 
