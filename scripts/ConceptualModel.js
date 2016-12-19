@@ -45,10 +45,8 @@ function loadAgents() {
             behavior.elementID = agent.elementID + "b" + k;
             agent.behaviors[k] = behavior;
         }
-
     }
 }
-
 
 function createAgentUI(agent) {
     $( "#Agents" ).append( '<button type = "button" id="'+ agent.elementID +'" class="agentButton col btn btn-primary">'+ agent.name +'</button>' );
