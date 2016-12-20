@@ -1,0 +1,44 @@
+<%parseAgents(data)%>
+
+
+<%function parseAgents(agents){
+%>
+<sprites>
+ <%
+     for(var k in agents){
+
+         parseAgent(agents[k]);
+     }
+ %>
+</sprites>
+<%}%>
+
+<% function parseAgent(agent){console.log(agent)%>
+    <sprite name="<%=agent.name%>" idx="2" x="-182" y="136" heading="197" scale="1" rotation="1"
+            draggable="true" costume="0" color="255,137.70000000000002,0" pen="tip" id="16">
+        <variables>
+            <%for (var p in agent.properties)if(agent.properties[p].selected)parseProperty(agent.properties[p])%>
+        </variables>
+        <blocks>
+            <%for (var b in agent.behaviors)if(agent.behaviors[b].selected)parseBehavior(agent.behaviors[b])%>
+        </blocks>
+        <scripts></scripts>
+    </sprite>
+<%}%>
+
+
+<%function parseBehavior(behavior){%>
+            <block-definition s="<%=behavior.name%>" type="command" category="other">
+                <header></header>
+                <code></code>
+                <inputs></inputs>
+            </block-definition>
+<%}%>
+
+<%function parseProperty(property){%>
+            <variable name="<%=property.name%>">
+                <l>0</l>
+            </variable>
+<%}%>
+
+

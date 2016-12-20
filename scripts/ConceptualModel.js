@@ -3,7 +3,8 @@
  */
 
 
-var selectedAgents = [];
+var selectedAgents = {};
+var ejs;
 
 $(document).ready(function () {
     loadAgents();
@@ -24,6 +25,7 @@ $(document).ready(function () {
     $("#btn_convert").click(function () {
         updateComputationalModel();
     });
+    ejs = new EJS({url: 'templates/netsblox_sprite.ejs'})
 });
 
 var agents;
@@ -46,7 +48,7 @@ function loadAgents() {
             property.name = agent.name + "_prop_" + (j + 1);
             property.elementID = agent.elementID + "p" + (j + 1);
             property.selected = false;
-            agent.properties[j] = property;
+            agent.properties[property.name.replace(/\s/g, '')] = property;
         }
         agent.behaviors = {};
         for (var k = 0; k < Math.random() * 10; k++) {
@@ -54,7 +56,7 @@ function loadAgents() {
             behavior.name = agent.name + "_behavior_" + (k + 1);
             behavior.elementID = agent.elementID + "b" + (k + 1);
             behavior.selected = false;
-            agent.behaviors[k] = behavior;
+            agent.behaviors[behavior.name.replace(/\s/g, '')] = behavior;
         }
     }
 }
@@ -86,12 +88,12 @@ function createAgentUI(agent) {
             // the checkbox is now checked
             console.log('checked ', n.agentObject.name);
             n.agentObject.selected = true;
-            selectedAgents.push(n.agentObject);
+            selectedAgents[n.agentObject.name.replace(/\s/g, '')] = n.agentObject;
         } else {
             // the checkbox is now no longer checked
             console.log('not checked ', n.agentObject.name);
             n.agentObject.selected = false;
-            selectedAgents.splice(selectedAgents.indexOf(n.agentObject),1);
+            delete selectedAgents[n.agentObject.name.replace(/\s/g, '')];
         }
     });
 }
@@ -157,7 +159,7 @@ function createBehaviorUI(behavior) {
 
 
 function updateComputationalModel() {
-    console.log("selectedAgents: ", selectedAgents);
-    var xml = jsonxml(selectedAgents,{escape:true, removeIllegalNameCharacters:true});
+    console.log(JSON.stringify(selectedAgents));
+    var xml = ejs.render({data: selectedAgents});
     console.log("xml: ", xml);
 }
