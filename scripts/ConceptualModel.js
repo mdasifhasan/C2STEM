@@ -162,4 +162,9 @@ function updateComputationalModel() {
     console.log(JSON.stringify(selectedAgents));
     var xml = ejs.render({data: selectedAgents});
     console.log("xml: ", xml);
+    load_project_xml(xml);
+}
+
+function load_project_xml(text) {
+    return document.getElementById('netsblox').contentWindow.load_project_xml(text);
 }
