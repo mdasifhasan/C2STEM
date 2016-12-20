@@ -48,7 +48,7 @@
 #conceptModelPanel {
     display: none;
     background-color: #aaaaaa;
-    height:342px;
+    height:390px;
     overflow: auto;
 }
 
@@ -79,3 +79,7 @@
     margin: 5px;
 }
 
+#btn_convert{
+    margin-left: 15px;
+    margin-top: 10px;
+}

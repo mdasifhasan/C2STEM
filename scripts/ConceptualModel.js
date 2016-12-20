@@ -20,6 +20,10 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#btn_convert").click(function () {
+        updateComputationalModel();
+    });
 });
 
 var agents;
@@ -89,7 +93,6 @@ function createAgentUI(agent) {
             n.agentObject.selected = false;
             selectedAgents.splice(selectedAgents.indexOf(n.agentObject),1);
         }
-        updateComputationalModel();
     });
 }
 
@@ -117,7 +120,6 @@ function createPropertyUI(property) {
             console.log('not checked ', property.name);
             property.selected = false;
         }
-        updateComputationalModel();
     });
 }
 
@@ -150,7 +152,6 @@ function createBehaviorUI(behavior) {
             console.log('not checked ', behavior.name);
             behavior.selected = false;
         }
-        updateComputationalModel();
     });
 }
 

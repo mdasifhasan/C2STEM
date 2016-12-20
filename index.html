@@ -8,9 +8,10 @@
     <script src="lib/jquery.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 
-
     <script src="scripts/ConceptualModel.js"></script>
     <link rel="stylesheet" href="styles/styles.css">
+
+    <script src="lib/jsontoxml.js"></script>
 
     <title>C2STEM</title>
 </head>
@@ -19,14 +20,19 @@
 <div class="container-fluid">
     <iframe src="netsblox/snap.html" id="netsblox"></iframe>
     <div id="conceptModelView">
-        <div id="conceptModelBar" ><a href="#" id="conceptModelButton"><span id="conceptModelIcon"class="glyphicon glyphicon-collapse-up"></span></a></div>
+        <div id="conceptModelBar"><a href="#" id="conceptModelButton"><span id="conceptModelIcon"
+                                                                            class="glyphicon glyphicon-collapse-up"></span></a>
+        </div>
         <div id="conceptModelPanel">
+            <div>
+                <button type = "button" id="btn_convert" class="col btn btn-primary">Convert</button>
+            </div>
             <div class="row">
                 <div class="col-sm-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">Agents</div>
                         <div class="panel-body conceptPanelBody">
-                            <div class="row btn-group"  id="Agents">
+                            <div class="row btn-group" id="Agents">
                                 <!--<div class="col-sm-4">.col-sm-4</div>-->
                             </div>
                         </div>
@@ -34,9 +40,10 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><span id = "AgentPropertyName">Properties: (No agent selected)</span></div>
+                        <div class="panel-heading"><span id="AgentPropertyName">Properties: (No agent selected)</span>
+                        </div>
                         <div class="panel-body conceptPanelBody">
-                            <div class="row btn-group"  id="AgentProperties">
+                            <div class="row btn-group" id="AgentProperties">
                                 <!--<div class="col-sm-4">.col-sm-4</div>-->
                             </div>
                         </div>
@@ -44,9 +51,10 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><span id = "AgentBehaviorName">Behaviors: (No agent selected)</span></div>
+                        <div class="panel-heading"><span id="AgentBehaviorName">Behaviors: (No agent selected)</span>
+                        </div>
                         <div class="panel-body conceptPanelBody">
-                            <div class="row btn-group"  id="AgentBehaviors">
+                            <div class="row btn-group" id="AgentBehaviors">
                                 <!--<div class="col-sm-4">.col-sm-4</div>-->
                             </div>
                         </div>
