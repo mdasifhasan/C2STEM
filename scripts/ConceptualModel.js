@@ -33,31 +33,41 @@ function loadAgents() {
 
     agents =
     {
-        "Somereallyreallyreallylongname": {
-            "name": "Some really really really long name",
-            "elementID": "agent1",
+        "Point Mass": {
+            "name": "Point Mass",
+            "elementID": "point_mass",
             "selected": false,
             "properties": {
-                "Somereallyreallyreallylongname_prop_1": {
-                    "name": "Some really really really long name_prop_1",
-                    "elementID": "agent1p1",
+                "Mass": {
+                    "name": "Mass",
+                    "elementID": "point_mass_mass",
+                    "selected": false
+                },
+                "Position": {
+                    "name": "Position",
+                    "elementID": "point_mass_position",
+                    "selected": false
+                },
+                "Velocity": {
+                    "name": "Velocity",
+                    "elementID": "point_mass_velocity",
                     "selected": false
                 }
             },
             "behaviors": {
-                "Somereallyreallyreallylongname_behavior_1": {
-                    "name": "Some really really really long name_behavior_1",
-                    "elementID": "agent1b1",
+                "Update Position": {
+                    "name": "Update Position",
+                    "elementID": "point_mass_update_position",
                     "selected": false
                 },
-                "Somereallyreallyreallylongname_behavior_2": {
-                    "name": "Some really really really long name_behavior_2",
-                    "elementID": "agent1b2",
+                "Update Velocity": {
+                    "name": "Update Velocity",
+                    "elementID": "point_mass_update_velocity",
                     "selected": false
                 },
-                "Somereallyreallyreallylongname_behavior_3": {
-                    "name": "Some really really really long name_behavior_3",
-                    "elementID": "agent1b3",
+                "Update Acceleration": {
+                    "name": "Update Acceleration",
+                    "elementID": "point_mass_update_acceleration",
                     "selected": false
                 }
             }
