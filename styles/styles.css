@@ -37,12 +37,14 @@
     position: absolute;
     left: 0;
     bottom: 0;
+    pointer-events:none;
 }
 
 #conceptModelBar {
     position: relative;
     left: 50%;
     display: inline-block;
+    pointer-events:auto;
 }
 
 #conceptModelPanel {
@@ -50,6 +52,7 @@
     background-color: #aaaaaa;
     height:390px;
     overflow: auto;
+    pointer-events:auto;
 }
 
 .glyphicon.glyphicon-collapse-up {

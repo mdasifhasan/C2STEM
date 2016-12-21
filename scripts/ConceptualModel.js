@@ -30,35 +30,150 @@ $(document).ready(function () {
 
 var agents;
 function loadAgents() {
-    agents = {};
 
-    for (var i = 0; i < 32; i++) {
-        var agent = {};
-        if (i === 0)
-            agent.name = "Some really really really long name";
-        else
-            agent.name = "Agent " + (i + 1);
-        agents[agent.name] = agent;
-        agent.elementID = "agent" + (i + 1);
-        agent.selected = false;
-
-        agent.properties = {};
-        for (var j = 0; j < Math.random() * 10; j++) {
-            var property = {};
-            property.name = agent.name + "_prop_" + (j + 1);
-            property.elementID = agent.elementID + "p" + (j + 1);
-            property.selected = false;
-            agent.properties[property.name.replace(/\s/g, '')] = property;
-        }
-        agent.behaviors = {};
-        for (var k = 0; k < Math.random() * 10; k++) {
-            var behavior = {};
-            behavior.name = agent.name + "_behavior_" + (k + 1);
-            behavior.elementID = agent.elementID + "b" + (k + 1);
-            behavior.selected = false;
-            agent.behaviors[behavior.name.replace(/\s/g, '')] = behavior;
+    agents =
+    {
+        "Somereallyreallyreallylongname": {
+            "name": "Some really really really long name",
+            "elementID": "agent1",
+            "selected": false,
+            "properties": {
+                "Somereallyreallyreallylongname_prop_1": {
+                    "name": "Some really really really long name_prop_1",
+                    "elementID": "agent1p1",
+                    "selected": false
+                }
+            },
+            "behaviors": {
+                "Somereallyreallyreallylongname_behavior_1": {
+                    "name": "Some really really really long name_behavior_1",
+                    "elementID": "agent1b1",
+                    "selected": false
+                },
+                "Somereallyreallyreallylongname_behavior_2": {
+                    "name": "Some really really really long name_behavior_2",
+                    "elementID": "agent1b2",
+                    "selected": false
+                },
+                "Somereallyreallyreallylongname_behavior_3": {
+                    "name": "Some really really really long name_behavior_3",
+                    "elementID": "agent1b3",
+                    "selected": false
+                }
+            }
+        },
+        "Agent3": {
+            "name": "Agent 3",
+            "elementID": "agent3",
+            "selected": false,
+            "properties": {
+                "Agent3_prop_1": {
+                    "name": "Agent 3_prop_1",
+                    "elementID": "agent3p1",
+                    "selected": false
+                },
+                "Agent3_prop_2": {
+                    "name": "Agent 3_prop_2",
+                    "elementID": "agent3p2",
+                    "selected": false
+                },
+                "Agent3_prop_3": {
+                    "name": "Agent 3_prop_3",
+                    "elementID": "agent3p3",
+                    "selected": false
+                },
+                "Agent3_prop_4": {
+                    "name": "Agent 3_prop_4",
+                    "elementID": "agent3p4",
+                    "selected": false
+                }
+            },
+            "behaviors": {
+                "Agent3_behavior_1": {
+                    "name": "Agent 3_behavior_1",
+                    "elementID": "agent3b1",
+                    "selected": false
+                }
+            }
+        },
+        "Agent7": {
+            "name": "Agent 7",
+            "elementID": "agent7",
+            "selected": false,
+            "properties": {
+                "Agent7_prop_1": {
+                    "name": "Agent 7_prop_1",
+                    "elementID": "agent7p1",
+                    "selected": true
+                },
+                "Agent7_prop_2": {
+                    "name": "Agent 7_prop_2",
+                    "elementID": "agent7p2",
+                    "selected": false
+                },
+                "Agent7_prop_3": {
+                    "name": "Agent 7_prop_3",
+                    "elementID": "agent7p3",
+                    "selected": false
+                },
+                "Agent7_prop_4": {
+                    "name": "Agent 7_prop_4",
+                    "elementID": "agent7p4",
+                    "selected": false
+                },
+                "Agent7_prop_5": {
+                    "name": "Agent 7_prop_5",
+                    "elementID": "agent7p5",
+                    "selected": false
+                }
+            },
+            "behaviors": {
+                "Agent7_behavior_1": {
+                    "name": "Agent 7_behavior_1",
+                    "elementID": "agent7b1",
+                    "selected": false
+                },
+                "Agent7_behavior_2": {
+                    "name": "Agent 7_behavior_2",
+                    "elementID": "agent7b2",
+                    "selected": false
+                },
+                "Agent7_behavior_3": {
+                    "name": "Agent 7_behavior_3",
+                    "elementID": "agent7b3",
+                    "selected": false
+                }
+            }
         }
     }
+    // agents = {};
+    // for (var i = 0; i < 32; i++) {
+    //     var agent = {};
+    //     if (i === 0)
+    //         agent.name = "Some really really really long name";
+    //     else
+    //         agent.name = "Agent " + (i + 1);
+    //     agents[agent.name] = agent;
+    //     agent.elementID = "agent" + (i + 1);
+    //     agent.selected = false;
+    //
+    //     agent.properties = {};
+    //     for (var j = 0; j < Math.random() * 10; j++) {
+    //         var property = {};
+    //         property.name = agent.name + "_prop_" + (j + 1);
+    //         property.elementID = agent.elementID + "p" + (j + 1);
+    //         property.selected = false;
+    //         agent.properties[property.name.replace(/\s/g, '')] = property;
+    //     }
+    //     agent.behaviors = {};
+    //     for (var k = 0; k < Math.random() * 10; k++) {
+    //         var behavior = {};
+    //         behavior.name = agent.name + "_behavior_" + (k + 1);
+    //         behavior.elementID = agent.elementID + "b" + (k + 1);
+    //         behavior.selected = false;
+    //         agent.behaviors[behavior.name.replace(/\s/g, '')] = behavior;
+    //     }
+    // }
 }
 
 function createAgentUI(agent) {
