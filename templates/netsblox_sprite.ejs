@@ -4,16 +4,16 @@
 <%function parseAgents(agents){
 %><sprites>
  <%
+     var idx = 1;
      for(var k in agents){
-
-         parseAgent(agents[k]);
+         parseAgent(agents[k], idx++);
      }
  %>
 </sprites>
 <%}%>
 
-<% function parseAgent(agent){console.log(agent)%>
-    <sprite name="<%=agent.name%>" idx="2" x="-182" y="136" heading="197" scale="1" rotation="1"
+<% function parseAgent(agent, idx){%>
+    <sprite name="<%=agent.name%>" idx="<%=idx%>" x="-182" y="136" heading="90" scale="1" rotation="1"
             draggable="true" costume="0" color="255,137.70000000000002,0" pen="tip" id="16">
         <variables>
             <%for (var p in agent.properties)if(agent.properties[p].selected)parseProperty(agent.properties[p])%>
