@@ -284,10 +284,38 @@ function createBehaviorUI(behavior) {
 
 
 function updateComputationalModel() {
-    console.log(JSON.stringify(selectedAgents));
-    var xml = ejs.render({data: selectedAgents});
-    console.log("xml: ", xml);
-    load_project_xml(xml);
+    var str = document.getElementById('netsblox').contentWindow.export_project_to_xml_str();
+    console.log(str);
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(str,"text/xml");
+
+    for(var key in selectedAgents){
+        console.log(selectedAgents[key]);
+        plugin_agent(xmlDoc, selectedAgents[key])
+    }
+    var convertedSTR = new XMLSerializer().serializeToString(xmlDoc);
+    console.log(convertedSTR);
+    load_project_xml(convertedSTR);
+
+
+    // console.log(JSON.stringify(selectedAgents));
+    // var xml = ejs.render({data: selectedAgents});
+    // console.log("xml: ", xml);
+    // load_project_xml(xml);
+}
+
+function plugin_agent(xmlDoc, agent) {
+    var agentNode = xmlDoc.createElement("sprite");
+    agentNode.setAttribute("name", agent.name);
+    xmlDoc.getElementsByTagName("sprites")[0].appendChild(agentNode);
+
+    // blocks
+    var blocks = xmlDoc.createElement("blocks");
+    agentNode.appendChild(blocks);
+    var variables = xmlDoc.createElement("variables");
+    agentNode.appendChild(variables);
+    var scripts = xmlDoc.createElement("scripts");
+    agentNode.appendChild(scripts);
 }
 
 function load_project_xml(text) {
