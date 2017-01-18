@@ -325,9 +325,21 @@ function plugin_agent(xmlDoc, agent) {
     for (var p in agent.properties)
         if (agent.properties[p].selected)
             plugin_properties(xmlDoc, agentNode, agent.properties[p])
+        else {
+            var e = getExistingNode(agentNode, "variable", "name", agent.properties[p].name)
+            if (!(e === null)) {
+                agentNode.getElementsByTagName("variables")[0].removeChild(e);
+            }
+        }
     for (var b in agent.behaviors)
         if (agent.behaviors[b].selected)
             plugin_behaviors(xmlDoc, agentNode, agent.behaviors[b])
+        else {
+            var e = getExistingNode(agentNode, "block-definition", "s", agent.behaviors[b].name);
+            if (!(e === null)) {
+                agentNode.getElementsByTagName("blocks")[0].removeChild(e);
+            }
+        }
 }
 
 function plugin_properties(xmlDoc, agentNode, property) {
