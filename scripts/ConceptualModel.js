@@ -284,15 +284,19 @@ function createBehaviorUI(behavior) {
 
 
 function updateComputationalModel() {
+    console.log("selectedAgents");
+    console.log(selectedAgents);
     var str = document.getElementById('netsblox').contentWindow.export_project_to_xml_str();
+    console.log("str");
     console.log(str);
     var parser = new DOMParser();
-    var xmlDoc = parser.parseFromString(str,"text/xml");
+    var xmlDoc = parser.parseFromString(str, "text/xml");
 
-    for(var key in selectedAgents){
+    for (var key in selectedAgents) {
         console.log(selectedAgents[key]);
         plugin_agent(xmlDoc, selectedAgents[key])
     }
+    console.log("convertedSTR");
     var convertedSTR = new XMLSerializer().serializeToString(xmlDoc);
     console.log(convertedSTR);
     load_project_xml(convertedSTR);
@@ -305,17 +309,60 @@ function updateComputationalModel() {
 }
 
 function plugin_agent(xmlDoc, agent) {
-    var agentNode = xmlDoc.createElement("sprite");
-    agentNode.setAttribute("name", agent.name);
-    xmlDoc.getElementsByTagName("sprites")[0].appendChild(agentNode);
+    var agentNode = getExistingNode(xmlDoc, "sprite", "name", agent.name);
+    if (agentNode === null) {
+        agentNode = xmlDoc.createElement("sprite");
+        agentNode.setAttribute("name", agent.name);
+        xmlDoc.getElementsByTagName("sprites")[0].appendChild(agentNode);
+        // blocks
+        var blocks = xmlDoc.createElement("blocks");
+        agentNode.appendChild(blocks);
+        var variables = xmlDoc.createElement("variables");
+        agentNode.appendChild(variables);
+        var scripts = xmlDoc.createElement("scripts");
+        agentNode.appendChild(scripts);
+    }
+    for (var p in agent.properties)
+        if (agent.properties[p].selected)
+            plugin_properties(xmlDoc, agentNode, agent.properties[p])
+    for (var b in agent.behaviors)
+        if (agent.behaviors[b].selected)
+            plugin_behaviors(xmlDoc, agentNode, agent.behaviors[b])
+}
 
-    // blocks
-    var blocks = xmlDoc.createElement("blocks");
-    agentNode.appendChild(blocks);
-    var variables = xmlDoc.createElement("variables");
-    agentNode.appendChild(variables);
-    var scripts = xmlDoc.createElement("scripts");
-    agentNode.appendChild(scripts);
+function plugin_properties(xmlDoc, agentNode, property) {
+    var node = getExistingNode(agentNode, "variable", "name", property.name);
+    if (node === null) {
+        node = xmlDoc.createElement("variable");
+        node.setAttribute("name", property.name);
+        agentNode.getElementsByTagName("variables")[0].appendChild(node);
+        var nodeValue = xmlDoc.createElement("l");
+        nodeValue.nodeValue = 0;
+        node.appendChild(nodeValue);
+    }
+}
+
+function plugin_behaviors(xmlDoc, agentNode, behavior) {
+    var node = getExistingNode(agentNode, "block-definition", "s", behavior.name);
+    if (node === null) {
+        node = xmlDoc.createElement("block-definition");
+        node.setAttribute("s", behavior.name);
+        node.setAttribute("type", "command");
+        node.setAttribute("category", "other");
+        agentNode.getElementsByTagName("blocks")[0].appendChild(node);
+
+        node.appendChild(xmlDoc.createElement("header"));
+        node.appendChild(xmlDoc.createElement("code"));
+        node.appendChild(xmlDoc.createElement("inputs"));
+    }
+}
+
+function getExistingNode(xmlDoc, nodeType, attrName, attrValue) {
+    var agents = xmlDoc.getElementsByTagName(nodeType);
+    for (var i = 0; i < agents.length; i++)
+        if (agents[i].getAttribute(attrName) === attrValue)
+            return agents[i];
+    return null;
 }
 
 function load_project_xml(text) {
