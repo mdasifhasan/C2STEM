@@ -5,7 +5,7 @@
 
 // var AgentStates = {};
 var ejs;
-
+var backups = {}
 $(document).ready(function () {
     loadAgents();
     for (var k in agents) {
@@ -289,18 +289,18 @@ function updateComputationalModel() {
     console.log(agents);
 
     var str = document.getElementById('netsblox').contentWindow.export_project_to_xml_str();
-    console.log("str");
-    console.log(str);
+    // console.log("str");
+    // console.log(str);
     var parser = new DOMParser();
     var xmlDoc = parser.parseFromString(str, "text/xml");
 
     for (var key in agents) {
-        console.log(agents[key]);
+        // console.log(agents[key]);
         plugin_agent(xmlDoc, agents[key])
     }
-    console.log("convertedSTR");
+    // console.log("convertedSTR");
     var convertedSTR = new XMLSerializer().serializeToString(xmlDoc);
-    console.log(convertedSTR);
+    // console.log(convertedSTR);
     load_project_xml(convertedSTR);
 
 
@@ -314,68 +314,128 @@ function plugin_agent(xmlDoc, agent) {
     var agentNode = getExistingNode(xmlDoc, "sprite", "name", agent.name);
     if (agentNode === null) {
         if(agent.selected) {
-            agentNode = xmlDoc.createElement("sprite");
-            agentNode.setAttribute("name", agent.name);
+            var id = agent.name;
+            var bkup = null;
+            if (id in backups)
+                bkup = backups[id];
+            if (bkup == null) {
+                agentNode = xmlDoc.createElement("sprite");
+                agentNode.setAttribute("name", agent.name);
+                // blocks
+                var blocks = xmlDoc.createElement("blocks");
+                agentNode.appendChild(blocks);
+                var variables = xmlDoc.createElement("variables");
+                agentNode.appendChild(variables);
+                var scripts = xmlDoc.createElement("scripts");
+                agentNode.appendChild(scripts);
+            }
+            else
+            {
+                console.log("using bkup agent: ");
+                console.log(bkup);
+                agentNode = bkup;
+            }
             xmlDoc.getElementsByTagName("sprites")[0].appendChild(agentNode);
-            // blocks
-            var blocks = xmlDoc.createElement("blocks");
-            agentNode.appendChild(blocks);
-            var variables = xmlDoc.createElement("variables");
-            agentNode.appendChild(variables);
-            var scripts = xmlDoc.createElement("scripts");
-            agentNode.appendChild(scripts);
         }else
             return;
     }else{
         if(agent.selected == false){
+            for (var p in agent.properties){
+                if (agent.properties[p].selected)
+                    xml_remove_property(agent.name, agentNode, agent.properties[p].name);
+            }
+
+            for (var b in agent.behaviors){
+                if (agent.behaviors[b].selected)
+                    xml_remove_behavior(agent.name, agentNode, agent.behaviors[b].name);
+            }
+            var id = agent.name;
+            backups[id] = agentNode;
+            console.log("backing up, id: " + id + " agent: ");
+            console.log(agentNode);
             agentNode.parentNode.removeChild(agentNode);
             return;
         }
     }
     for (var p in agent.properties)
-        if (agent.properties[p].selected)
-            plugin_properties(xmlDoc, agentNode, agent.properties[p])
+        if (agent.properties[p].selected){
+            var id = agent.name + "_p_" + p;
+            var bkup = null;
+            if(id in backups)
+                bkup = backups[id];
+            plugin_properties(xmlDoc, agentNode, agent.properties[p], bkup);
+        }
         else {
-            var e = getExistingNode(agentNode, "variable", "name", agent.properties[p].name)
-            if (!(e === null)) {
-                agentNode.getElementsByTagName("variables")[0].removeChild(e);
-            }
+            xml_remove_property(agent.name, agentNode, agent.properties[p].name);
         }
     for (var b in agent.behaviors)
-        if (agent.behaviors[b].selected)
-            plugin_behaviors(xmlDoc, agentNode, agent.behaviors[b])
+        if (agent.behaviors[b].selected){
+            var id = agent.name + "_b_" + b;
+            var bkup = null;
+            if(id in backups)
+                bkup = backups[id];
+            plugin_behaviors(xmlDoc, agentNode, agent.behaviors[b], bkup)
+        }
         else {
-            var e = getExistingNode(agentNode, "block-definition", "s", agent.behaviors[b].name);
-            if (!(e === null)) {
-                agentNode.getElementsByTagName("blocks")[0].removeChild(e);
-            }
+            xml_remove_behavior(agent.name, agentNode, agent.behaviors[b].name);
         }
 }
-
-function plugin_properties(xmlDoc, agentNode, property) {
+function xml_remove_property(agentName, agentNode, propertyName) {
+    var e = getExistingNode(agentNode, "variable", "name", propertyName)
+    if (!(e === null)) {
+        agentNode.getElementsByTagName("variables")[0].removeChild(e);
+        var id = agentName + "_p_" + propertyName;
+        backups[id] = e;
+        console.log("backing up, id: " + id + " property: ");
+        console.log(e);
+    }
+}
+function xml_remove_behavior(agentName, agentNode, behaviorName) {
+    var e = getExistingNode(agentNode, "block-definition", "s", behaviorName);
+    if (!(e === null)) {
+        agentNode.getElementsByTagName("blocks")[0].removeChild(e);
+        var id = agentName + "_b_" + behaviorName;
+        backups[id] = e;
+        console.log("backing up, id: " + id + " behavior: ");
+        console.log(e);
+    }
+}
+function plugin_properties(xmlDoc, agentNode, property, bkup) {
     var node = getExistingNode(agentNode, "variable", "name", property.name);
     if (node === null) {
-        node = xmlDoc.createElement("variable");
-        node.setAttribute("name", property.name);
+        if(bkup == null){
+            node = xmlDoc.createElement("variable");
+            node.setAttribute("name", property.name);
+            var nodeValue = xmlDoc.createElement("l");
+            nodeValue.nodeValue = 0;
+            node.appendChild(nodeValue);
+        }else{
+            console.log("using bkup property: ");
+            console.log(bkup);
+            node = bkup;
+        }
         agentNode.getElementsByTagName("variables")[0].appendChild(node);
-        var nodeValue = xmlDoc.createElement("l");
-        nodeValue.nodeValue = 0;
-        node.appendChild(nodeValue);
     }
 }
 
-function plugin_behaviors(xmlDoc, agentNode, behavior) {
+function plugin_behaviors(xmlDoc, agentNode, behavior, bkup) {
     var node = getExistingNode(agentNode, "block-definition", "s", behavior.name);
     if (node === null) {
-        node = xmlDoc.createElement("block-definition");
-        node.setAttribute("s", behavior.name);
-        node.setAttribute("type", "command");
-        node.setAttribute("category", "other");
-        agentNode.getElementsByTagName("blocks")[0].appendChild(node);
+        if(bkup == null) {
+            node = xmlDoc.createElement("block-definition");
+            node.setAttribute("s", behavior.name);
+            node.setAttribute("type", "command");
+            node.setAttribute("category", "other");
 
-        node.appendChild(xmlDoc.createElement("header"));
-        node.appendChild(xmlDoc.createElement("code"));
-        node.appendChild(xmlDoc.createElement("inputs"));
+            node.appendChild(xmlDoc.createElement("header"));
+            node.appendChild(xmlDoc.createElement("code"));
+            node.appendChild(xmlDoc.createElement("inputs"));
+        }else{
+            console.log("using bkup behavior: ");
+            console.log(bkup);
+            node = bkup;
+        }
+        agentNode.getElementsByTagName("blocks")[0].appendChild(node);
     }
 }
 
