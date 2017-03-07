@@ -3,7 +3,7 @@
  */
 
 
-var selectedAgents = {};
+// var AgentStates = {};
 var ejs;
 
 $(document).ready(function () {
@@ -199,6 +199,7 @@ function createAgentUI(agent) {
     //     $("#Agents").append('<button type = "button" id="' + agent.elementID + '" class="agentButton col btn btn-primary"><input id="chk_' + agent.elementID + '" type="checkbox"> <label for="chk_' + agent.elementID + '" >' + agent.name + '</label></button>');
     var n = document.getElementById(agent.elementID);
     n.agentObject = agent;
+    // AgentStates[n.agentObject.name.replace(/\s/g, '')] = n.agentObject;
     n.onclick = function () {
         $("#AgentPropertyName").text("Properties: " + this.agentObject.name);
         $("#AgentBehaviorName").text("Behaviors: : " + this.agentObject.name);
@@ -213,12 +214,12 @@ function createAgentUI(agent) {
             // the checkbox is now checked
             console.log('checked ', n.agentObject.name);
             n.agentObject.selected = true;
-            selectedAgents[n.agentObject.name.replace(/\s/g, '')] = n.agentObject;
+            // AgentStates[n.agentObject.name.replace(/\s/g, '')] = n.agentObject;
         } else {
             // the checkbox is now no longer checked
             console.log('not checked ', n.agentObject.name);
             n.agentObject.selected = false;
-            delete selectedAgents[n.agentObject.name.replace(/\s/g, '')];
+            // delete AgentStates[n.agentObject.name.replace(/\s/g, '')];
         }
     });
 }
@@ -284,17 +285,18 @@ function createBehaviorUI(behavior) {
 
 
 function updateComputationalModel() {
-    console.log("selectedAgents");
-    console.log(selectedAgents);
+    console.log("Agents");
+    console.log(agents);
+
     var str = document.getElementById('netsblox').contentWindow.export_project_to_xml_str();
     console.log("str");
     console.log(str);
     var parser = new DOMParser();
     var xmlDoc = parser.parseFromString(str, "text/xml");
 
-    for (var key in selectedAgents) {
-        console.log(selectedAgents[key]);
-        plugin_agent(xmlDoc, selectedAgents[key])
+    for (var key in agents) {
+        console.log(agents[key]);
+        plugin_agent(xmlDoc, agents[key])
     }
     console.log("convertedSTR");
     var convertedSTR = new XMLSerializer().serializeToString(xmlDoc);
@@ -302,8 +304,8 @@ function updateComputationalModel() {
     load_project_xml(convertedSTR);
 
 
-    // console.log(JSON.stringify(selectedAgents));
-    // var xml = ejs.render({data: selectedAgents});
+    // console.log(JSON.stringify(AgentStates));
+    // var xml = ejs.render({data: AgentStates});
     // console.log("xml: ", xml);
     // load_project_xml(xml);
 }
@@ -311,16 +313,24 @@ function updateComputationalModel() {
 function plugin_agent(xmlDoc, agent) {
     var agentNode = getExistingNode(xmlDoc, "sprite", "name", agent.name);
     if (agentNode === null) {
-        agentNode = xmlDoc.createElement("sprite");
-        agentNode.setAttribute("name", agent.name);
-        xmlDoc.getElementsByTagName("sprites")[0].appendChild(agentNode);
-        // blocks
-        var blocks = xmlDoc.createElement("blocks");
-        agentNode.appendChild(blocks);
-        var variables = xmlDoc.createElement("variables");
-        agentNode.appendChild(variables);
-        var scripts = xmlDoc.createElement("scripts");
-        agentNode.appendChild(scripts);
+        if(agent.selected) {
+            agentNode = xmlDoc.createElement("sprite");
+            agentNode.setAttribute("name", agent.name);
+            xmlDoc.getElementsByTagName("sprites")[0].appendChild(agentNode);
+            // blocks
+            var blocks = xmlDoc.createElement("blocks");
+            agentNode.appendChild(blocks);
+            var variables = xmlDoc.createElement("variables");
+            agentNode.appendChild(variables);
+            var scripts = xmlDoc.createElement("scripts");
+            agentNode.appendChild(scripts);
+        }else
+            return;
+    }else{
+        if(agent.selected == false){
+            agentNode.parentNode.removeChild(agentNode);
+            return;
+        }
     }
     for (var p in agent.properties)
         if (agent.properties[p].selected)
