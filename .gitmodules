@@ -1,3 +1,4 @@
 [submodule "netsblox"]
-	branch = conceptual_model path = netsblox
+	path = netsblox
 	url = https://github.com/c2stem/snap-physics.git
+	branch = conceptual_model
