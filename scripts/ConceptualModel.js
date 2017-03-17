@@ -30,8 +30,31 @@ $(document).ready(function () {
 
 var agents;
 function loadAgents() {
+
     agents =
     {
+        "Environment": {
+            "name": "Environment",
+            "elementID": "Environment",
+            "selected": false,
+            "properties": {
+                "DeltaTime": {
+                    "name": "DeltaTime",
+                    "elementID": "environment_DeltaTime",
+                    "selected": false
+                },
+                "TimeFromStart": {
+                    "name": "TimeFromStart",
+                    "elementID": "environment_TimeFromStart",
+                    "selected": false
+                },
+                "Gravity": {
+                    "name": "Gravity",
+                    "elementID": "environment_GravityX",
+                    "selected": false
+                }
+            }
+        },
         "Point Mass": {
             "name": "Point Mass",
             "elementID": "point_mass",
@@ -138,89 +161,6 @@ function loadAgents() {
                 "Update Average Acceleration": {
                     "name": "Update Average Acceleration",
                     "elementID": "point_mass_UpdateAverageAcceleration",
-                    "selected": false
-                }
-            }
-        },
-        "Agent3": {
-            "name": "Agent 3",
-            "elementID": "agent3",
-            "selected": false,
-            "properties": {
-                "Agent3_prop_1": {
-                    "name": "Agent 3_prop_1",
-                    "elementID": "agent3p1",
-                    "selected": false
-                },
-                "Agent3_prop_2": {
-                    "name": "Agent 3_prop_2",
-                    "elementID": "agent3p2",
-                    "selected": false
-                },
-                "Agent3_prop_3": {
-                    "name": "Agent 3_prop_3",
-                    "elementID": "agent3p3",
-                    "selected": false
-                },
-                "Agent3_prop_4": {
-                    "name": "Agent 3_prop_4",
-                    "elementID": "agent3p4",
-                    "selected": false
-                }
-            },
-            "behaviors": {
-                "Agent3_behavior_1": {
-                    "name": "Agent 3_behavior_1",
-                    "elementID": "agent3b1",
-                    "selected": false
-                }
-            }
-        },
-        "Agent7": {
-            "name": "Agent 7",
-            "elementID": "agent7",
-            "selected": false,
-            "properties": {
-                "Agent7_prop_1": {
-                    "name": "Agent 7_prop_1",
-                    "elementID": "agent7p1",
-                    "selected": true
-                },
-                "Agent7_prop_2": {
-                    "name": "Agent 7_prop_2",
-                    "elementID": "agent7p2",
-                    "selected": false
-                },
-                "Agent7_prop_3": {
-                    "name": "Agent 7_prop_3",
-                    "elementID": "agent7p3",
-                    "selected": false
-                },
-                "Agent7_prop_4": {
-                    "name": "Agent 7_prop_4",
-                    "elementID": "agent7p4",
-                    "selected": false
-                },
-                "Agent7_prop_5": {
-                    "name": "Agent 7_prop_5",
-                    "elementID": "agent7p5",
-                    "selected": false
-                }
-            },
-            "behaviors": {
-                "Agent7_behavior_1": {
-                    "name": "Agent 7_behavior_1",
-                    "elementID": "agent7b1",
-                    "selected": false
-                },
-                "Agent7_behavior_2": {
-                    "name": "Agent 7_behavior_2",
-                    "elementID": "agent7b2",
-                    "selected": false
-                },
-                "Agent7_behavior_3": {
-                    "name": "Agent 7_behavior_3",
-                    "elementID": "agent7b3",
                     "selected": false
                 }
             }
