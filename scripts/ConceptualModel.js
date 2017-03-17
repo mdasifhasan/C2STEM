@@ -30,7 +30,6 @@ $(document).ready(function () {
 
 var agents;
 function loadAgents() {
-
     agents =
     {
         "Point Mass": {
@@ -43,14 +42,60 @@ function loadAgents() {
                     "elementID": "point_mass_mass",
                     "selected": false
                 },
-                "Position": {
-                    "name": "Position",
-                    "elementID": "point_mass_position",
+                "Position X": {
+                    "name": "Position X",
+                    "elementID": "point_mass_position_x",
                     "selected": false
                 },
-                "Velocity": {
-                    "name": "Velocity",
-                    "elementID": "point_mass_velocity",
+                "Position Y": {
+                    "name": "Position Y",
+                    "elementID": "point_mass_position_y",
+                    "selected": false
+                },
+                "Velocity X": {
+                    "name": "Velocity X",
+                    "elementID": "point_mass_velocity_x",
+                    "selected": false
+                },
+                "Velocity Y": {
+                    "name": "Velocity Y",
+                    "elementID": "point_mass_velocity_y",
+                    "selected": false
+                },"Speed": {
+                    "name": "Speed",
+                    "elementID": "point_mass_speed",
+                    "selected": false
+                },"Moving Direction": {
+                    "name": "Moving Direction",
+                    "elementID": "point_mass_MovingDirection",
+                    "selected": false
+                },"Acceleration X": {
+                    "name": "Acceleration X",
+                    "elementID": "point_mass_AccelerationX",
+                    "selected": false
+                },"Acceleration Y": {
+                    "name": "Acceleration Y",
+                    "elementID": "point_mass_AccelerationY",
+                    "selected": false
+                },"Average Velocity X": {
+                    "name": "Average Velocity X",
+                    "elementID": "point_mass_AverageVelocityX",
+                    "selected": false
+                },"Average Velocity Y": {
+                    "name": "Average Velocity Y",
+                    "elementID": "point_mass_AverageVelocityY",
+                    "selected": false
+                },"Average Speed": {
+                    "name": "Average Speed",
+                    "elementID": "point_mass_AverageSpeed",
+                    "selected": false
+                },"Average Acceleration X": {
+                    "name": "Average Acceleration X",
+                    "elementID": "point_mass_AverageAccelerationX",
+                    "selected": false
+                },"Average Acceleration Y": {
+                    "name": "Average Acceleration Y",
+                    "elementID": "point_mass_AverageAccelerationY",
                     "selected": false
                 }
             },
@@ -68,6 +113,31 @@ function loadAgents() {
                 "Update Acceleration": {
                     "name": "Update Acceleration",
                     "elementID": "point_mass_update_acceleration",
+                    "selected": false
+                },
+                "Update Speed": {
+                    "name": "Update Speed",
+                    "elementID": "point_mass_UpdateSpeed",
+                    "selected": false
+                },
+                "Update Moving Direction": {
+                    "name": "Update Moving Direction",
+                    "elementID": "point_mass_UpdateMovingDirection",
+                    "selected": false
+                },
+                "Update Average Velocity": {
+                    "name": "Update Average Velocity",
+                    "elementID": "point_mass_UpdateAverageVelocity",
+                    "selected": false
+                },
+                "Update Average Speed": {
+                    "name": "Update Average Speed",
+                    "elementID": "point_mass_UpdateAverageSpeed",
+                    "selected": false
+                },
+                "Update Average Acceleration": {
+                    "name": "Update Average Acceleration",
+                    "elementID": "point_mass_UpdateAverageAcceleration",
                     "selected": false
                 }
             }
