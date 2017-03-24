@@ -22,6 +22,20 @@ $(document).ready(function () {
         });
     });
 
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href")
+        if(target === "Sprites"){
+            for (var k in agents) {
+                createAgentUI(agents[k]);
+            }
+        }else if(target === "Environment"){
+            for (var k in agents) {
+                createAgentUI(agents[k]);
+            }
+        }
+    });
+
+
     $("#btn_convert").click(function () {
         updateComputationalModel();
     });
@@ -29,6 +43,7 @@ $(document).ready(function () {
 });
 
 var agents;
+var environment;
 function loadAgents() {
 
     agents =
