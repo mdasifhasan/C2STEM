@@ -24,14 +24,18 @@ $(document).ready(function () {
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var target = $(e.target).attr("href")
-        if(target === "Sprites"){
+        if (target === "Sprites") {
+            $("#Agents").html("");
             for (var k in agents) {
                 createAgentUI(agents[k]);
             }
-        }else if(target === "Environment"){
-            for (var k in agents) {
-                createAgentUI(agents[k]);
+            console.log("filling in with sprites");
+        } else if (target === "Environment") {
+            $("#Agents").html("");
+            for (var k in environment) {
+                createAgentUI(environment[k]);
             }
+            console.log("filling in with environment");
         }
     });
 
@@ -45,142 +49,151 @@ $(document).ready(function () {
 var agents;
 var environment;
 function loadAgents() {
-
-    agents =
-    {
-        "Environment": {
-            "name": "Environment",
-            "elementID": "Environment",
-            "selected": false,
-            "properties": {
-                "DeltaTime": {
-                    "name": "DeltaTime",
-                    "elementID": "environment_DeltaTime",
-                    "selected": false
-                },
-                "TimeFromStart": {
-                    "name": "TimeFromStart",
-                    "elementID": "environment_TimeFromStart",
-                    "selected": false
-                },
-                "Gravity": {
-                    "name": "Gravity",
-                    "elementID": "environment_GravityX",
-                    "selected": false
-                }
-            }
-        },
-        "Point Mass": {
-            "name": "Point Mass",
-            "elementID": "point_mass",
-            "selected": false,
-            "properties": {
-                "Mass": {
-                    "name": "Mass",
-                    "elementID": "point_mass_mass",
-                    "selected": false
-                },
-                "Position X": {
-                    "name": "Position X",
-                    "elementID": "point_mass_position_x",
-                    "selected": false
-                },
-                "Position Y": {
-                    "name": "Position Y",
-                    "elementID": "point_mass_position_y",
-                    "selected": false
-                },
-                "Velocity X": {
-                    "name": "Velocity X",
-                    "elementID": "point_mass_velocity_x",
-                    "selected": false
-                },
-                "Velocity Y": {
-                    "name": "Velocity Y",
-                    "elementID": "point_mass_velocity_y",
-                    "selected": false
-                },"Speed": {
-                    "name": "Speed",
-                    "elementID": "point_mass_speed",
-                    "selected": false
-                },"Moving Direction": {
-                    "name": "Moving Direction",
-                    "elementID": "point_mass_MovingDirection",
-                    "selected": false
-                },"Acceleration X": {
-                    "name": "Acceleration X",
-                    "elementID": "point_mass_AccelerationX",
-                    "selected": false
-                },"Acceleration Y": {
-                    "name": "Acceleration Y",
-                    "elementID": "point_mass_AccelerationY",
-                    "selected": false
-                },"Average Velocity X": {
-                    "name": "Average Velocity X",
-                    "elementID": "point_mass_AverageVelocityX",
-                    "selected": false
-                },"Average Velocity Y": {
-                    "name": "Average Velocity Y",
-                    "elementID": "point_mass_AverageVelocityY",
-                    "selected": false
-                },"Average Speed": {
-                    "name": "Average Speed",
-                    "elementID": "point_mass_AverageSpeed",
-                    "selected": false
-                },"Average Acceleration X": {
-                    "name": "Average Acceleration X",
-                    "elementID": "point_mass_AverageAccelerationX",
-                    "selected": false
-                },"Average Acceleration Y": {
-                    "name": "Average Acceleration Y",
-                    "elementID": "point_mass_AverageAccelerationY",
-                    "selected": false
+    environment =
+        {
+            "Time": {
+                "name": "Time",
+                "elementID": "env_time",
+                "selected": false,
+                "properties": {
+                    "DeltaTime": {
+                        "name": "DeltaTime",
+                        "elementID": "environment_DeltaTime",
+                        "selected": false
+                    },
+                    "TimeFromStart": {
+                        "name": "TimeFromStart",
+                        "elementID": "environment_TimeFromStart",
+                        "selected": false
+                    }
                 }
             },
-            "behaviors": {
-                "Update Position": {
-                    "name": "Update Position",
-                    "elementID": "point_mass_update_position",
-                    "selected": false
-                },
-                "Update Velocity": {
-                    "name": "Update Velocity",
-                    "elementID": "point_mass_update_velocity",
-                    "selected": false
-                },
-                "Update Acceleration": {
-                    "name": "Update Acceleration",
-                    "elementID": "point_mass_update_acceleration",
-                    "selected": false
-                },
-                "Update Speed": {
-                    "name": "Update Speed",
-                    "elementID": "point_mass_UpdateSpeed",
-                    "selected": false
-                },
-                "Update Moving Direction": {
-                    "name": "Update Moving Direction",
-                    "elementID": "point_mass_UpdateMovingDirection",
-                    "selected": false
-                },
-                "Update Average Velocity": {
-                    "name": "Update Average Velocity",
-                    "elementID": "point_mass_UpdateAverageVelocity",
-                    "selected": false
-                },
-                "Update Average Speed": {
-                    "name": "Update Average Speed",
-                    "elementID": "point_mass_UpdateAverageSpeed",
-                    "selected": false
-                },
-                "Update Average Acceleration": {
-                    "name": "Update Average Acceleration",
-                    "elementID": "point_mass_UpdateAverageAcceleration",
-                    "selected": false
+            "Physics": {
+                "name": "Physics",
+                "elementID": "env_physics",
+                "selected": false,
+                "properties": {
+                    "Gravity": {
+                        "name": "Gravity",
+                        "elementID": "environment_GravityX",
+                        "selected": false
+                    }
                 }
             }
         }
-    }
+    agents =
+        {
+            "Point Mass": {
+                "name": "Point Mass",
+                "elementID": "point_mass",
+                "selected": false,
+                "properties": {
+                    "Mass": {
+                        "name": "Mass",
+                        "elementID": "point_mass_mass",
+                        "selected": false
+                    },
+                    "Position X": {
+                        "name": "Position X",
+                        "elementID": "point_mass_position_x",
+                        "selected": false
+                    },
+                    "Position Y": {
+                        "name": "Position Y",
+                        "elementID": "point_mass_position_y",
+                        "selected": false
+                    },
+                    "Velocity X": {
+                        "name": "Velocity X",
+                        "elementID": "point_mass_velocity_x",
+                        "selected": false
+                    },
+                    "Velocity Y": {
+                        "name": "Velocity Y",
+                        "elementID": "point_mass_velocity_y",
+                        "selected": false
+                    }, "Speed": {
+                        "name": "Speed",
+                        "elementID": "point_mass_speed",
+                        "selected": false
+                    }, "Moving Direction": {
+                        "name": "Moving Direction",
+                        "elementID": "point_mass_MovingDirection",
+                        "selected": false
+                    }, "Acceleration X": {
+                        "name": "Acceleration X",
+                        "elementID": "point_mass_AccelerationX",
+                        "selected": false
+                    }, "Acceleration Y": {
+                        "name": "Acceleration Y",
+                        "elementID": "point_mass_AccelerationY",
+                        "selected": false
+                    }, "Average Velocity X": {
+                        "name": "Average Velocity X",
+                        "elementID": "point_mass_AverageVelocityX",
+                        "selected": false
+                    }, "Average Velocity Y": {
+                        "name": "Average Velocity Y",
+                        "elementID": "point_mass_AverageVelocityY",
+                        "selected": false
+                    }, "Average Speed": {
+                        "name": "Average Speed",
+                        "elementID": "point_mass_AverageSpeed",
+                        "selected": false
+                    }, "Average Acceleration X": {
+                        "name": "Average Acceleration X",
+                        "elementID": "point_mass_AverageAccelerationX",
+                        "selected": false
+                    }, "Average Acceleration Y": {
+                        "name": "Average Acceleration Y",
+                        "elementID": "point_mass_AverageAccelerationY",
+                        "selected": false
+                    }
+                },
+                "behaviors": {
+                    "Update Position": {
+                        "name": "Update Position",
+                        "elementID": "point_mass_update_position",
+                        "selected": false
+                    },
+                    "Update Velocity": {
+                        "name": "Update Velocity",
+                        "elementID": "point_mass_update_velocity",
+                        "selected": false
+                    },
+                    "Update Acceleration": {
+                        "name": "Update Acceleration",
+                        "elementID": "point_mass_update_acceleration",
+                        "selected": false
+                    },
+                    "Update Speed": {
+                        "name": "Update Speed",
+                        "elementID": "point_mass_UpdateSpeed",
+                        "selected": false
+                    },
+                    "Update Moving Direction": {
+                        "name": "Update Moving Direction",
+                        "elementID": "point_mass_UpdateMovingDirection",
+                        "selected": false
+                    },
+                    "Update Average Velocity": {
+                        "name": "Update Average Velocity",
+                        "elementID": "point_mass_UpdateAverageVelocity",
+                        "selected": false
+                    },
+                    "Update Average Speed": {
+                        "name": "Update Average Speed",
+                        "elementID": "point_mass_UpdateAverageSpeed",
+                        "selected": false
+                    },
+                    "Update Average Acceleration": {
+                        "name": "Update Average Acceleration",
+                        "elementID": "point_mass_UpdateAverageAcceleration",
+                        "selected": false
+                    }
+                }
+            }
+        }
     // agents = {};
     // for (var i = 0; i < 32; i++) {
     //     var agent = {};
@@ -323,9 +336,10 @@ function updateComputationalModel() {
         // console.log(agents[key]);
         plugin_agent(xmlDoc, agents[key])
     }
-    // console.log("convertedSTR");
+    plugin_environment_variables(xmlDoc);
+    console.log("convertedSTR");
     var convertedSTR = new XMLSerializer().serializeToString(xmlDoc);
-    // console.log(convertedSTR);
+    console.log(convertedSTR);
     load_project_xml(convertedSTR);
 
 
@@ -335,10 +349,42 @@ function updateComputationalModel() {
     // load_project_xml(xml);
 }
 
+function plugin_environment_variables(xmlDoc) {
+    var parentNode = xmlDoc.getElementsByTagName("project")[0];
+    console.log("plugin_environment_variables, parentNode: ", parentNode);
+    var parent = getChildByTag(xmlDoc.getElementsByTagName("project")[0], "variables");
+    for (var key in environment) {
+        var e = environment[key];
+        console.log("e: ", e);
+        if (e.selected) {
+            for (var p in e.properties) {
+                if (e.properties[p].selected) {
+                    var id = e.name + "_p_" + p;
+                    var bkup = null;
+                    if (id in backups)
+                        bkup = backups[id];
+                    console.log("plugin_properties: ", e.properties[p]);
+                    plugin_properties_direct(xmlDoc, parent, e.properties[p], bkup);
+                }
+                else {
+                    console.log("xml_remove_property: ", e.properties[p]);
+                    // xml_remove_property(e.name, parentNode, e.properties[p].name);
+                    xml_remove_property_direct(e.name, parent, e.properties[p].name)
+                }
+            }
+        }
+        else if (e.selected == false) {
+            for (var p in e.properties) {
+                xml_remove_property_direct(e.name, parent, e.properties[p].name)
+            }
+        }
+    }
+}
+
 function plugin_agent(xmlDoc, agent) {
     var agentNode = getExistingNode(xmlDoc, "sprite", "name", agent.name);
     if (agentNode === null) {
-        if(agent.selected) {
+        if (agent.selected) {
             var id = agent.name;
             var bkup = null;
             if (id in backups)
@@ -354,24 +400,23 @@ function plugin_agent(xmlDoc, agent) {
                 var scripts = xmlDoc.createElement("scripts");
                 agentNode.appendChild(scripts);
             }
-            else
-            {
+            else {
                 console.log("using bkup agent: ");
                 console.log(bkup);
                 agentNode = bkup;
             }
             xmlDoc.getElementsByTagName("sprites")[0].appendChild(agentNode);
-        }else
+        } else
             return;
-    }else{
-        if(agent.selected == false){
-            for (var p in agent.properties){
-                if (agent.properties[p].selected)
+    } else {
+        if (agent.selected == false) {
+            for (var p in agent.properties) {
+                // if (agent.properties[p].selected)
                     xml_remove_property(agent.name, agentNode, agent.properties[p].name);
             }
 
-            for (var b in agent.behaviors){
-                if (agent.behaviors[b].selected)
+            for (var b in agent.behaviors) {
+                // if (agent.behaviors[b].selected)
                     xml_remove_behavior(agent.name, agentNode, agent.behaviors[b].name);
             }
             var id = agent.name;
@@ -383,10 +428,10 @@ function plugin_agent(xmlDoc, agent) {
         }
     }
     for (var p in agent.properties)
-        if (agent.properties[p].selected){
+        if (agent.properties[p].selected) {
             var id = agent.name + "_p_" + p;
             var bkup = null;
-            if(id in backups)
+            if (id in backups)
                 bkup = backups[id];
             plugin_properties(xmlDoc, agentNode, agent.properties[p], bkup);
         }
@@ -394,10 +439,10 @@ function plugin_agent(xmlDoc, agent) {
             xml_remove_property(agent.name, agentNode, agent.properties[p].name);
         }
     for (var b in agent.behaviors)
-        if (agent.behaviors[b].selected){
+        if (agent.behaviors[b].selected) {
             var id = agent.name + "_b_" + b;
             var bkup = null;
-            if(id in backups)
+            if (id in backups)
                 bkup = backups[id];
             plugin_behaviors(xmlDoc, agentNode, agent.behaviors[b], bkup)
         }
@@ -405,6 +450,7 @@ function plugin_agent(xmlDoc, agent) {
             xml_remove_behavior(agent.name, agentNode, agent.behaviors[b].name);
         }
 }
+
 function xml_remove_property(agentName, agentNode, propertyName) {
     var e = getExistingNode(agentNode, "variable", "name", propertyName)
     if (!(e === null)) {
@@ -415,6 +461,21 @@ function xml_remove_property(agentName, agentNode, propertyName) {
         console.log(e);
     }
 }
+
+function xml_remove_property_direct(agentName, parent, propertyName) {
+    var e = getChildByName(parent, propertyName);
+    console.log(parent, "xml_remove_property_direct", propertyName, e);
+    // var e = getExistingNode(parent, "variable", "name", propertyName)
+    if (!(e === null)) {
+        // parent.getElementsByTagName("variables")[0].removeChild(e);
+        parent.removeChild(e);
+        var id = agentName + "_p_" + propertyName;
+        backups[id] = e;
+        console.log("backing up, id: " + id + " property: ");
+        console.log(e);
+    }
+}
+
 function xml_remove_behavior(agentName, agentNode, behaviorName) {
     var e = getExistingNode(agentNode, "block-definition", "s", behaviorName);
     if (!(e === null)) {
@@ -428,13 +489,13 @@ function xml_remove_behavior(agentName, agentNode, behaviorName) {
 function plugin_properties(xmlDoc, agentNode, property, bkup) {
     var node = getExistingNode(agentNode, "variable", "name", property.name);
     if (node === null) {
-        if(bkup == null){
+        if (bkup == null) {
             node = xmlDoc.createElement("variable");
             node.setAttribute("name", property.name);
             var nodeValue = xmlDoc.createElement("l");
             nodeValue.nodeValue = 0;
             node.appendChild(nodeValue);
-        }else{
+        } else {
             console.log("using bkup property: ");
             console.log(bkup);
             node = bkup;
@@ -442,11 +503,45 @@ function plugin_properties(xmlDoc, agentNode, property, bkup) {
         agentNode.getElementsByTagName("variables")[0].appendChild(node);
     }
 }
+function getChildByTag(parent, tag) {
+    var x = parent.childNodes;
+    for (var i = 0; i < x.length; i++) {
+        if (x[i].tagName === tag)
+            return x[i];
+    }
+    return null;
+}
+function getChildByName(parent, name) {
+    var x = parent.childNodes;
+    for (var i = 0; i < x.length; i++) {
+        if (x[i].getAttribute("name") === name)
+            return x[i];
+    }
+    return null;
+}
+function plugin_properties_direct(xmlDoc, parent, property, bkup) {
+    var node = getChildByName(parent, property.name);
+    if (node === null) {
+        if (bkup == null) {
+            node = xmlDoc.createElement("variable");
+            node.setAttribute("name", property.name);
+            var nodeValue = xmlDoc.createElement("l");
+            nodeValue.nodeValue = 0;
+            node.appendChild(nodeValue);
+        } else {
+            console.log("using bkup property: ");
+            console.log(bkup);
+            node = bkup;
+        }
+        parent.appendChild(node);
+    }
+}
+
 
 function plugin_behaviors(xmlDoc, agentNode, behavior, bkup) {
     var node = getExistingNode(agentNode, "block-definition", "s", behavior.name);
     if (node === null) {
-        if(bkup == null) {
+        if (bkup == null) {
             node = xmlDoc.createElement("block-definition");
             node.setAttribute("s", behavior.name);
             node.setAttribute("type", "command");
@@ -455,7 +550,7 @@ function plugin_behaviors(xmlDoc, agentNode, behavior, bkup) {
             node.appendChild(xmlDoc.createElement("header"));
             node.appendChild(xmlDoc.createElement("code"));
             node.appendChild(xmlDoc.createElement("inputs"));
-        }else{
+        } else {
             console.log("using bkup behavior: ");
             console.log(bkup);
             node = bkup;
