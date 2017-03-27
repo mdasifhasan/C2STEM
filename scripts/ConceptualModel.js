@@ -46,182 +46,110 @@ $(document).ready(function () {
     ejs = new EJS({url: 'templates/netsblox_sprite.ejs'})
 });
 
-var agents;
-var environment;
-function loadAgents() {
-    environment =
-        {
-            "Time": {
-                "name": "Time",
-                "elementID": "env_time",
-                "selected": false,
-                "properties": {
-                    "DeltaTime": {
-                        "name": "DeltaTime",
-                        "elementID": "environment_DeltaTime",
-                        "selected": false
-                    },
-                    "TimeFromStart": {
-                        "name": "TimeFromStart",
-                        "elementID": "environment_TimeFromStart",
-                        "selected": false
+
+function plugin_constructs_by_rules(xmlDoc, agent, agnetNode) {
+    console.log("plugin_constructs_by_rules", rules);
+    for (var r in rules) {
+        var rule = rules[r]
+        console.log("rule:", rule);
+        if (isRuleSatisfied(rule, agent)) {
+            generate_constructs_of_rule(xmlDoc, agnetNode, rule, null);
+        }
+    }
+}
+
+function generate_constructs_of_rule(xmlDoc, agentNode, rule, bkup) {
+    console.log("generate_constructs_of_rule: ", rule);
+    for (var cid in rule.GeneratedConstructs) {
+        var c = rule.GeneratedConstructs[cid];
+        switch (c.type) {
+            case "Method":
+                console.log("generating method: ", c);
+                var node = getExistingNode(agentNode, "block-definition", "s", c.label);
+                if (node === null) {
+                    if (bkup == null) {
+                        node = xmlDoc.createElement("block-definition");
+                        var label = c.label;
+                        for (var p in c.params) {
+                            var param = c.params[p];
+                            label= label + " %&apos;" + param.label + "&apos; ";
+                        }
+                        node.setAttribute("s", label);
+                        node.setAttribute("type", "command");
+                        node.setAttribute("category", "other");
+
+                        node.appendChild(xmlDoc.createElement("header"));
+                        node.appendChild(xmlDoc.createElement("code"));
+                        var inputs = xmlDoc.createElement("inputs");
+                        node.appendChild(inputs);
+
+                        for (var p in c.params) {
+                            var param = c.params[p];
+                            var input = xmlDoc.createElement("input");
+                            if (param.type === "Number")
+                                input.setAttribute("type", "%n");
+                            else
+                                input.setAttribute("type", "%s");
+                            inputs.appendChild(input);
+                        }
+                    } else {
+                        console.log("using bkup behavior: ");
+                        console.log(bkup);
+                        node = bkup;
                     }
+                    agentNode.getElementsByTagName("blocks")[0].appendChild(node);
                 }
-            },
-            "Physics": {
-                "name": "Physics",
-                "elementID": "env_physics",
-                "selected": false,
-                "properties": {
-                    "Gravity": {
-                        "name": "Gravity",
-                        "elementID": "environment_GravityX",
-                        "selected": false
+                break;
+            case "Variable":
+                break;
+            default:
+                console.log("generate_constructs_of_rule: rule has unrecognized construct type", rule);
+        }
+    }
+}
+
+function isRuleSatisfied(rule, agent) {
+    var pass = true;
+    var found = false;
+    for (var q in rule.Required) {
+        var rq = rule.Required[q];
+        console.log("checking Required", rq, (rq in agent.properties));
+        if (rq in agent.behaviors) {
+            found = true;
+            if (!agent.behaviors[rq].selected) {
+                pass = false;
+            }
+        } else if (rq in agent.properties) {
+            found = true;
+            if (!agent.properties[rq].selected) {
+                pass = false;
+            }else
+                console.log("pass is ", pass);
+        } else {
+            for (var e in environment) {
+                if (environment[e].selected) {
+                    var a = environment[e]
+                    if (rq in a.behaviors) {
+                        found = true;
+                        if (!a.behaviors[rq].selected) {
+                            pass = false;
+                        }
+                    } else if (rq in a.properties) {
+                        found = true;
+                        if (!a.properties[rq].selected) {
+                            pass = false;
+                        }
                     }
                 }
             }
+            console.log("rule reburies constructs which is not present in the agent or environment");
         }
-    agents =
-        {
-            "Point Mass": {
-                "name": "Point Mass",
-                "elementID": "point_mass",
-                "selected": false,
-                "properties": {
-                    "Mass": {
-                        "name": "Mass",
-                        "elementID": "point_mass_mass",
-                        "selected": false
-                    },
-                    "Position X": {
-                        "name": "Position X",
-                        "elementID": "point_mass_position_x",
-                        "selected": false
-                    },
-                    "Position Y": {
-                        "name": "Position Y",
-                        "elementID": "point_mass_position_y",
-                        "selected": false
-                    },
-                    "Velocity X": {
-                        "name": "Velocity X",
-                        "elementID": "point_mass_velocity_x",
-                        "selected": false
-                    },
-                    "Velocity Y": {
-                        "name": "Velocity Y",
-                        "elementID": "point_mass_velocity_y",
-                        "selected": false
-                    }, "Speed": {
-                        "name": "Speed",
-                        "elementID": "point_mass_speed",
-                        "selected": false
-                    }, "Moving Direction": {
-                        "name": "Moving Direction",
-                        "elementID": "point_mass_MovingDirection",
-                        "selected": false
-                    }, "Acceleration X": {
-                        "name": "Acceleration X",
-                        "elementID": "point_mass_AccelerationX",
-                        "selected": false
-                    }, "Acceleration Y": {
-                        "name": "Acceleration Y",
-                        "elementID": "point_mass_AccelerationY",
-                        "selected": false
-                    }, "Average Velocity X": {
-                        "name": "Average Velocity X",
-                        "elementID": "point_mass_AverageVelocityX",
-                        "selected": false
-                    }, "Average Velocity Y": {
-                        "name": "Average Velocity Y",
-                        "elementID": "point_mass_AverageVelocityY",
-                        "selected": false
-                    }, "Average Speed": {
-                        "name": "Average Speed",
-                        "elementID": "point_mass_AverageSpeed",
-                        "selected": false
-                    }, "Average Acceleration X": {
-                        "name": "Average Acceleration X",
-                        "elementID": "point_mass_AverageAccelerationX",
-                        "selected": false
-                    }, "Average Acceleration Y": {
-                        "name": "Average Acceleration Y",
-                        "elementID": "point_mass_AverageAccelerationY",
-                        "selected": false
-                    }
-                },
-                "behaviors": {
-                    "Update Position": {
-                        "name": "Update Position",
-                        "elementID": "point_mass_update_position",
-                        "selected": false
-                    },
-                    "Update Velocity": {
-                        "name": "Update Velocity",
-                        "elementID": "point_mass_update_velocity",
-                        "selected": false
-                    },
-                    "Update Acceleration": {
-                        "name": "Update Acceleration",
-                        "elementID": "point_mass_update_acceleration",
-                        "selected": false
-                    },
-                    "Update Speed": {
-                        "name": "Update Speed",
-                        "elementID": "point_mass_UpdateSpeed",
-                        "selected": false
-                    },
-                    "Update Moving Direction": {
-                        "name": "Update Moving Direction",
-                        "elementID": "point_mass_UpdateMovingDirection",
-                        "selected": false
-                    },
-                    "Update Average Velocity": {
-                        "name": "Update Average Velocity",
-                        "elementID": "point_mass_UpdateAverageVelocity",
-                        "selected": false
-                    },
-                    "Update Average Speed": {
-                        "name": "Update Average Speed",
-                        "elementID": "point_mass_UpdateAverageSpeed",
-                        "selected": false
-                    },
-                    "Update Average Acceleration": {
-                        "name": "Update Average Acceleration",
-                        "elementID": "point_mass_UpdateAverageAcceleration",
-                        "selected": false
-                    }
-                }
-            }
-        }
-    // agents = {};
-    // for (var i = 0; i < 32; i++) {
-    //     var agent = {};
-    //     if (i === 0)
-    //         agent.name = "Some really really really long name";
-    //     else
-    //         agent.name = "Agent " + (i + 1);
-    //     agents[agent.name] = agent;
-    //     agent.elementID = "agent" + (i + 1);
-    //     agent.selected = false;
-    //
-    //     agent.properties = {};
-    //     for (var j = 0; j < Math.random() * 10; j++) {
-    //         var property = {};
-    //         property.name = agent.name + "_prop_" + (j + 1);
-    //         property.elementID = agent.elementID + "p" + (j + 1);
-    //         property.selected = false;
-    //         agent.properties[property.name.replace(/\s/g, '')] = property;
-    //     }
-    //     agent.behaviors = {};
-    //     for (var k = 0; k < Math.random() * 10; k++) {
-    //         var behavior = {};
-    //         behavior.name = agent.name + "_behavior_" + (k + 1);
-    //         behavior.elementID = agent.elementID + "b" + (k + 1);
-    //         behavior.selected = false;
-    //         agent.behaviors[behavior.name.replace(/\s/g, '')] = behavior;
-    //     }
-    // }
+        if (!found)
+            pass = false;
+    }
+    console.log("checking rule", rule, "result:", pass);
+
+    return pass;
 }
 
 function createAgentUI(agent) {
@@ -348,10 +276,9 @@ function updateComputationalModel() {
     // console.log("xml: ", xml);
     // load_project_xml(xml);
 }
-
 function plugin_environment_variables(xmlDoc) {
     var parentNode = xmlDoc.getElementsByTagName("project")[0];
-    console.log("plugin_environment_variables, parentNode: ", parentNode);
+    // console.log("plugin_environment_variables, parentNode: ", parentNode);
     var parent = getChildByTag(xmlDoc.getElementsByTagName("project")[0], "variables");
     for (var key in environment) {
         var e = environment[key];
@@ -412,12 +339,12 @@ function plugin_agent(xmlDoc, agent) {
         if (agent.selected == false) {
             for (var p in agent.properties) {
                 // if (agent.properties[p].selected)
-                    xml_remove_property(agent.name, agentNode, agent.properties[p].name);
+                xml_remove_property(agent.name, agentNode, agent.properties[p].name);
             }
 
             for (var b in agent.behaviors) {
                 // if (agent.behaviors[b].selected)
-                    xml_remove_behavior(agent.name, agentNode, agent.behaviors[b].name);
+                xml_remove_behavior(agent.name, agentNode, agent.behaviors[b].name);
             }
             var id = agent.name;
             backups[id] = agentNode;
@@ -427,6 +354,8 @@ function plugin_agent(xmlDoc, agent) {
             return;
         }
     }
+
+    plugin_constructs_by_rules(xmlDoc, agent, agentNode);
     for (var p in agent.properties)
         if (agent.properties[p].selected) {
             var id = agent.name + "_p_" + p;
@@ -449,6 +378,7 @@ function plugin_agent(xmlDoc, agent) {
         else {
             xml_remove_behavior(agent.name, agentNode, agent.behaviors[b].name);
         }
+
 }
 
 function xml_remove_property(agentName, agentNode, propertyName) {
@@ -486,6 +416,8 @@ function xml_remove_behavior(agentName, agentNode, behaviorName) {
         console.log(e);
     }
 }
+
+
 function plugin_properties(xmlDoc, agentNode, property, bkup) {
     var node = getExistingNode(agentNode, "variable", "name", property.name);
     if (node === null) {
