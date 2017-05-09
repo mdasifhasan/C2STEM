@@ -43,7 +43,7 @@ $(document).ready(function () {
     $("#btn_convert").click(function () {
         updateComputationalModel();
     });
-    ejs = new EJS({url: 'templates/netsblox_sprite.ejs'})
+    // ejs = new EJS({url: 'templates/netsblox_sprite.ejs'})
 });
 
 
