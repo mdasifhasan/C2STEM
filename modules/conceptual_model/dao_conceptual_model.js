@@ -8,7 +8,8 @@ function dao_conceptual_model() {
         console.log("conceptual model data:")
         console.log(data);
         concepts = data
-    })
+        console.log("total agents: ", Object.keys(concepts.agents).length);
+    });
 }
 
 function is_ready_cm_dao() {
