@@ -6,14 +6,36 @@ function conceptual_model_load_data(){
     dao_conceptual_model();
 }
 
-function conceptual_model_load_views(parent_id) {
-    $('#'+parent_id).load('modules/conceptual_model/view_conceptual_model.html', function () {
-       populate_data();
+function create_new_concept() {
+    var selected_concept = $('#cm_concepts').val();
+    console.log("selected_concept:",selected_concept);
+    var selected_agent = null;
+    if( selected_concept in concepts.environment ){
+        selected_agent = concepts.environment[selected_concept];
+    }else if( selected_concept in concepts.agents ){
+        selected_agent = concepts.agents[selected_concept];
+    }
+    console.log("selected_agent",selected_agent);
+    if(selected_agent !== null){
+
+    }
+}
+
+function OnViewLoaded() {
+    populate_view();
+    $("#cm_create_concept").click(function () {
+        create_new_concept();
     });
 }
 
-function populate_data() {
+function conceptual_model_load_views(parent_id) {
+    $('#'+parent_id).load('modules/conceptual_model/view_conceptual_model.html', function () {
+        OnViewLoaded();
+    });
+}
 
+
+function populate_view() {
     var $combo_agents = $('#cm_concepts');
     console.log("conceptual_model_load_views loading options of concepts that can be created, total agents: ", Object.keys(concepts.environment).length);
 
