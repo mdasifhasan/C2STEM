@@ -7,17 +7,22 @@ function conceptual_model_load_data(){
 }
 
 function create_new_concept() {
-    var selected_concept = $('#cm_concepts').val();
-    console.log("selected_concept:",selected_concept);
-    var selected_agent = null;
-    if( selected_concept in concepts.environment ){
-        selected_agent = concepts.environment[selected_concept];
-    }else if( selected_concept in concepts.agents ){
-        selected_agent = concepts.agents[selected_concept];
+    var selected_concept_key = $('#cm_concepts').val();
+    console.log("selected_concept_key:",selected_concept_key);
+    var selected_concept = null;
+    if( selected_concept_key in concepts.environment ){
+        selected_concept = concepts.environment[selected_concept_key];
+    }else if( selected_concept_key in concepts.agents ){
+        selected_concept = concepts.agents[selected_concept_key];
     }
-    console.log("selected_agent",selected_agent);
-    if(selected_agent !== null){
-
+    console.log("selected_concept",selected_concept);
+    if(selected_concept !== null){
+        console.log("creating new concept: " + selected_concept.name);
+        data = {};
+        data.concept = selected_concept;
+        var html = new EJS({url: 'modules/conceptual_model/template_concept.ejs'}).render(data);
+        var $concept_container = $('#concept_container');
+        $concept_container.append(html);
     }
 }
 
@@ -65,4 +70,9 @@ function is_ready_cm() {
     if (!is_ready_cm_dao())
         return false;
     return true;
+}
+
+
+function create_new_agent_view() {
+
 }
