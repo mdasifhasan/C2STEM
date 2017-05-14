@@ -17,6 +17,7 @@ function create_new_concept() {
     }
     console.log("selected_concept",selected_concept);
     if(selected_concept !== null){
+        selected_concept.seleted = true;
         console.log("creating new concept: " + selected_concept.name);
         data = {};
         data.concept = selected_concept;
@@ -29,6 +30,8 @@ function create_new_concept() {
             console.log("clicked");
             $("#"+selected_concept.elementID).remove();
             $("#cm_concepts option[value='"+ selected_concept_key +"']").show();
+            selected_concept.seleted = false;
+            console.log("selected_concept",selected_concept);
         });
     }
 }
