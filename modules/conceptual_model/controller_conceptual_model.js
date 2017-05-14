@@ -29,6 +29,7 @@ function create_new_concept() {
             $("#cm_concepts option[value='"+ selected_concept_key +"']").show();
             selected_concept.selected = false;
             console.log("delete selected_concept",selected_concept);
+            OnModelChanged();
         });
 
         $("#sel_prop_"+selected_concept.elementID).change(function () {
@@ -49,7 +50,9 @@ function create_new_concept() {
                 $("#sel_prop_" + selected_concept.elementID + " option[value='"+ selected_prop_key +"']").show();
                 selected_property.selected = false;
                 console.log("delete selected_property",selected_property);
+                OnModelChanged();
             });
+            OnModelChanged();
         });
 
 
@@ -71,11 +74,18 @@ function create_new_concept() {
                 $("#sel_be_" + selected_concept.elementID + " option[value='"+ selected_behavior_key +"']").show();
                 selected_behavior.selected = false;
                 console.log("delete selected_behavior",selected_behavior);
+                OnModelChanged();
             });
+            OnModelChanged();
         });
+        OnModelChanged();
     }
 }
 
+function OnModelChanged() {
+    console.log("OnModelChanged");
+    updateComputationalModel(concepts.environment, concepts.agents, concepts.rules);
+}
 function OnViewLoaded() {
     populate_view();
     $("#cm_create_concept").click(function () {

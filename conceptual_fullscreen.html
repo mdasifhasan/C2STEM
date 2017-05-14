@@ -4,23 +4,31 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!--Libraries-->
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
     <script src="lib/jquery.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="lib/ejs_production.js"></script>
     <script type="text/javascript" src="lib/ejs_fulljslint.js"></script>
+    <!--End Libraries-->
 
 
-    <script src="scripts/ConceptualModelData.js"></script>
-    <!--<script src="scripts/ConceptualModel.js"></script>-->
+    <!--StyleSheets-->
     <link rel="stylesheet" href="styles/styles.css">
+    <!--End StyleSheets-->
 
+    <!--Modules-->
 
+    <!--Conceptual Model-->
     <script type="text/javascript" src="modules/conceptual_model/template_concept.ejs"></script>
     <script type="text/javascript" src="modules/conceptual_model/template_prop_row.ejs"></script>
     <script type="text/javascript" src="modules/conceptual_model/dao_conceptual_model.js"></script>
+    <script type="text/javascript" src="modules/conceptual_model/transform_concept_to_computational.js"></script>
     <script type="text/javascript" src="modules/conceptual_model/controller_conceptual_model.js"></script>
+    <!--End Conceptual Model-->
+
     <script type="text/javascript" src="modules/module_root.js"></script>
+    <!--End Modules-->
 
     <title>C2STEM</title>
 </head>
@@ -52,7 +60,7 @@
             <h3>Loading...</h3>
         </div>
         <div class="tab-pane" id="4a">
-            <iframe src="netsblox/snap.html" id="netsblox"></iframe>
+            <iframe src="netsblox/snap.html" id="netsblox" style="height: 94.6%;"></iframe>
         </div>
         <div class="tab-pane" id="5a">
             <h3>“You only live once, but if you do it right, once is enough.” ― Mae West</h3>
