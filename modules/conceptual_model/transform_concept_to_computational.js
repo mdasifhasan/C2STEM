@@ -22,9 +22,9 @@ function updateComputationalModel() {
         plugin_agent(xmlDoc, agents[key])
     }
     plugin_environment_variables(xmlDoc, environment);
-    console.log("convertedSTR");
+    // console.log("convertedSTR");
     var convertedSTR = new XMLSerializer().serializeToString(xmlDoc);
-    console.log(convertedSTR);
+    // console.log(convertedSTR);
     load_project_xml(convertedSTR);
 
 
@@ -44,10 +44,11 @@ function plugin_environment_variables(xmlDoc, environment) {
         if (e.selected) {
             for (var p in e.properties) {
                 if (e.properties[p].selected) {
-                    var id = e.name + "_p_" + p;
+                    var id = e.name + "_p_" + e.properties[p].name;
                     var bkup = null;
                     if (id in backups)
                         bkup = backups[id];
+                    console.log(id,"bkup: ", bkup);
                     console.log("plugin_properties: ", e.properties[p]);
                     plugin_properties_direct(xmlDoc, parent, e.properties[p], bkup);
                 }
@@ -116,7 +117,7 @@ function plugin_agent(xmlDoc, agent) {
     plugin_constructs_by_rules(xmlDoc, agent, agentNode);
     for (var p in agent.properties)
         if (agent.properties[p].selected) {
-            var id = agent.name + "_p_" + p;
+            var id = agent.name + "_p_" + agent.properties[p].name;
             var bkup = null;
             if (id in backups)
                 bkup = backups[id];
@@ -127,7 +128,7 @@ function plugin_agent(xmlDoc, agent) {
         }
     for (var b in agent.behaviors)
         if (agent.behaviors[b].selected) {
-            var id = agent.name + "_b_" + b;
+            var id = agent.name + "_b_" + agent.behaviors[b].name;
             var bkup = null;
             if (id in backups)
                 bkup = backups[id];
