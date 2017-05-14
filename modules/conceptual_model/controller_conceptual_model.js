@@ -33,6 +33,49 @@ function create_new_concept() {
             selected_concept.seleted = false;
             console.log("selected_concept",selected_concept);
         });
+
+        $("#sel_prop_"+selected_concept.elementID).change(function () {
+            var selected_prop_key = $("#sel_prop_"+selected_concept.elementID).val();
+            var selected_property = selected_concept.properties[selected_prop_key];
+            $("#sel_prop_" + selected_concept.elementID + " option[value='"+ selected_prop_key +"']").hide();
+            $("#sel_prop_" + selected_concept.elementID + " option[value='']").prop('selected', true);
+            // add prop row
+            // check prop delete handler
+            // upon delete make prop reappear in the list and delete prop row
+            var $container_prop_row = $("#row_prop_"+selected_concept.elementID);
+            var html = new EJS({url: 'modules/conceptual_model/template_prop_row.ejs'}).render(selected_property);
+            $container_prop_row.append(html);
+            selected_property.seleted = true;
+            $("#delete_"+selected_property.elementID).click(function () {
+                console.log("clicked");
+                $("#"+selected_property.elementID).remove();
+                $("#sel_prop_" + selected_concept.elementID + " option[value='"+ selected_prop_key +"']").show();
+                selected_property.seleted = false;
+                console.log("selected_property",selected_property);
+            });
+        });
+
+
+        $("#sel_be_"+selected_concept.elementID).change(function () {
+            var selected_behavior_key = $("#sel_be_"+selected_concept.elementID).val();
+            var selected_behavior = selected_concept.behaviors[selected_behavior_key];
+            $("#sel_be_" + selected_concept.elementID + " option[value='"+ selected_behavior_key +"']").hide();
+            $("#sel_be_" + selected_concept.elementID + " option[value='']").prop('selected', true);
+            // add prop row
+            // check prop delete handler
+            // upon delete make prop reappear in the list and delete prop row
+            var $container_be_row = $("#row_be_"+selected_concept.elementID);
+            var html = new EJS({url: 'modules/conceptual_model/template_prop_row.ejs'}).render(selected_behavior);
+            $container_be_row.append(html);
+            selected_behavior.seleted = true;
+            $("#delete_"+selected_behavior.elementID).click(function () {
+                console.log("clicked");
+                $("#"+selected_behavior.elementID).remove();
+                $("#sel_be_" + selected_concept.elementID + " option[value='"+ selected_behavior_key +"']").show();
+                selected_behavior.seleted = false;
+                console.log("selected_behavior",selected_behavior);
+            });
+        });
     }
 }
 
