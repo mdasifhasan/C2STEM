@@ -12,18 +12,11 @@
         </div>
         <select id = "sel_prop_<%=concept.elementID%>" class="form-control dropdown-select" style="position: relative; display: inline;">
             <option value="">[-- Create new property --]</option>
-            <% for(var p in concept.properties) { if (!concept.properties[p].selected){%>
+            <% for(var p in concept.properties) { %>
             <option value= <%= p%>><%= concept.properties[p].name%></option>
-            <% }} %>
+            <% } %>
         </select>
         <div id = "row_prop_<%=concept.elementID%>" class="row agent_properties">
-            <% for(var p in concept.properties) { if (concept.properties[p].selected){%>
-            <div class="row">
-                <div class="col-md-12 master"><%= concept.properties[p].name%>
-                    <button type="button" class="btn btn-lg pull-right close" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
-                </div>
-            </div>
-            <% } }%>
         </div>
         <%}%>
         <%if("behaviors" in concept){%>
@@ -32,18 +25,11 @@
         </div>
         <select id = "sel_be_<%=concept.elementID%>" class="form-control dropdown-select" style="position: relative; display: inline;">
             <option value="">[-- Create new behavior --]</option>
-            <% for(var p in concept.behaviors) { if (!concept.behaviors[p].selected){%>
+            <% for(var p in concept.behaviors) {%>
             <option value= <%= p%>><%= concept.behaviors[p].name%></option>
-            <% }} %>
+            <% } %>
         </select>
         <div id = "row_be_<%=concept.elementID%>" class="row agent_behaviors">
-            <% for(var p in concept.behaviors) { if (concept.behaviors[p].selected){%>
-            <div class="row">
-                <div class="col-md-12 master"><%= concept.behaviors[p].name%>
-                    <button type="button" class="btn btn-lg pull-right close" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
-                </div>
-            </div>
-            <% } }%>
         </div>
         <%}%>
     </div>

@@ -8,17 +8,15 @@ function conceptual_model_load_data(){
 
 function create_new_concept() {
     var selected_concept_key = $('#cm_concepts').val();
-    console.log("selected_concept_key:",selected_concept_key);
     var selected_concept = null;
     if( selected_concept_key in concepts.environment ){
         selected_concept = concepts.environment[selected_concept_key];
     }else if( selected_concept_key in concepts.agents ){
         selected_concept = concepts.agents[selected_concept_key];
     }
-    console.log("selected_concept",selected_concept);
     if(selected_concept !== null){
-        selected_concept.seleted = true;
-        console.log("creating new concept: " + selected_concept.name);
+        selected_concept.selected = true;
+        console.log("creating new concept: " + selected_concept);
         data = {};
         data.concept = selected_concept;
         var html = new EJS({url: 'modules/conceptual_model/template_concept.ejs'}).render(data);
@@ -27,11 +25,10 @@ function create_new_concept() {
         $("#cm_concepts option[value='"+ selected_concept_key +"']").hide();
         $("#cm_concepts option[value='']").prop('selected', true);
         $("#delete_"+selected_concept.elementID).click(function () {
-            console.log("clicked");
             $("#"+selected_concept.elementID).remove();
             $("#cm_concepts option[value='"+ selected_concept_key +"']").show();
-            selected_concept.seleted = false;
-            console.log("selected_concept",selected_concept);
+            selected_concept.selected = false;
+            console.log("delete selected_concept",selected_concept);
         });
 
         $("#sel_prop_"+selected_concept.elementID).change(function () {
@@ -45,13 +42,13 @@ function create_new_concept() {
             var $container_prop_row = $("#row_prop_"+selected_concept.elementID);
             var html = new EJS({url: 'modules/conceptual_model/template_prop_row.ejs'}).render(selected_property);
             $container_prop_row.append(html);
-            selected_property.seleted = true;
+            selected_property.selected = true;
+            console.log("selected_property",selected_property);
             $("#delete_"+selected_property.elementID).click(function () {
-                console.log("clicked");
                 $("#"+selected_property.elementID).remove();
                 $("#sel_prop_" + selected_concept.elementID + " option[value='"+ selected_prop_key +"']").show();
-                selected_property.seleted = false;
-                console.log("selected_property",selected_property);
+                selected_property.selected = false;
+                console.log("delete selected_property",selected_property);
             });
         });
 
@@ -67,13 +64,13 @@ function create_new_concept() {
             var $container_be_row = $("#row_be_"+selected_concept.elementID);
             var html = new EJS({url: 'modules/conceptual_model/template_prop_row.ejs'}).render(selected_behavior);
             $container_be_row.append(html);
-            selected_behavior.seleted = true;
+            selected_behavior.selected = true;
+            console.log("selected_behavior",selected_behavior);
             $("#delete_"+selected_behavior.elementID).click(function () {
-                console.log("clicked");
                 $("#"+selected_behavior.elementID).remove();
                 $("#sel_be_" + selected_concept.elementID + " option[value='"+ selected_behavior_key +"']").show();
-                selected_behavior.seleted = false;
-                console.log("selected_behavior",selected_behavior);
+                selected_behavior.selected = false;
+                console.log("delete selected_behavior",selected_behavior);
             });
         });
     }
