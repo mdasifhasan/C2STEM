@@ -1,9 +1,9 @@
 <%console.log("name: ", name) %>
 
-<div class="col-sm-2" style="min-width: 300px">
+<div class="col-sm-2" style="min-width: 300px" id = "<%=concept.elementID%>">
     <div class="agent panel panel-default" >
         <div class="panel-heading" style="text-align: center;"><%=concept.name%>
-            <button type="button" class="btn btn-lg pull-right close" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
+            <button id = "delete_<%=concept.elementID%>" type="button" class="btn btn-lg pull-right close" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
         </div>
 
         <%if("properties" in concept){%>

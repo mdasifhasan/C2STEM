@@ -23,6 +23,13 @@ function create_new_concept() {
         var html = new EJS({url: 'modules/conceptual_model/template_concept.ejs'}).render(data);
         var $concept_container = $('#concept_container');
         $concept_container.append(html);
+        $("#cm_concepts option[value='"+ selected_concept_key +"']").hide();
+        $("#cm_concepts option[value='']").prop('selected', true);
+        $("#delete_"+selected_concept.elementID).click(function () {
+            console.log("clicked");
+            $("#"+selected_concept.elementID).remove();
+            $("#cm_concepts option[value='"+ selected_concept_key +"']").show();
+        });
     }
 }
 
