@@ -6,6 +6,77 @@ function conceptual_model_load_data(){
     dao_conceptual_model();
 }
 
+function handle_property_events(selected_concept, selected_prop_key) {
+    var selected_property = selected_concept.properties[selected_prop_key];
+    $("#sel_prop_" + selected_concept.elementID + " option[value='"+ selected_prop_key +"']").hide();
+    var $container_prop_row = $("#row_prop_"+selected_concept.elementID);
+
+    console.log(selected_prop_key,"selected_property",selected_property);
+    var html = new EJS({url: 'modules/conceptual_model/template_prop_row.ejs'}).render(selected_property);
+    $container_prop_row.append(html);
+    selected_property.selected = true;
+
+
+    var n = document.getElementById("delete_"+selected_property.elementID);
+
+    n.selected_concept = selected_concept;
+    n.selected_property = selected_property;
+    n.selected_prop_key = selected_prop_key;
+
+    $("#delete_"+selected_property.elementID).click(function (event) {
+        var eid = event.currentTarget.id;
+        var n = document.getElementById(eid);
+
+        selected_concept = n.selected_concept;
+        selected_property = n.selected_property;
+        selected_prop_key = n.selected_prop_key;
+
+        $("#"+selected_property.elementID).remove();
+        $("#sel_prop_" + selected_concept.elementID + " option[value='"+ selected_prop_key +"']").show();
+        selected_property.selected = false;
+        console.log("delete selected_property",selected_property);
+        OnModelChanged();
+    });
+}
+
+function handle_behavior_events(selected_concept, selected_behavior_key) {
+
+    var selected_behavior = selected_concept.behaviors[selected_behavior_key];
+    $("#sel_be_" + selected_concept.elementID + " option[value='"+ selected_behavior_key +"']").hide();
+    $("#sel_be_" + selected_concept.elementID + " option[value='']").prop('selected', true);
+    // add prop row
+    // check prop delete handler
+    // upon delete make prop reappear in the list and delete prop row
+    var $container_be_row = $("#row_be_"+selected_concept.elementID);
+    var html = new EJS({url: 'modules/conceptual_model/template_prop_row.ejs'}).render(selected_behavior);
+    $container_be_row.append(html);
+    selected_behavior.selected = true;
+    console.log("selected_behavior",selected_behavior);
+
+
+    var n = document.getElementById("delete_"+selected_behavior.elementID);
+
+    n.selected_concept = selected_concept;
+    n.selected_behavior = selected_behavior;
+    n.selected_behavior_key = selected_behavior_key;
+
+
+    $("#delete_"+selected_behavior.elementID).click(function () {
+        var eid = event.currentTarget.id;
+        var n = document.getElementById(eid);
+
+        selected_concept = n.selected_concept;
+        selected_behavior = n.selected_behavior;
+        selected_behavior_key = n.selected_behavior_key;
+
+        $("#"+selected_behavior.elementID).remove();
+        $("#sel_be_" + selected_concept.elementID + " option[value='"+ selected_behavior_key +"']").show();
+        selected_behavior.selected = false;
+        console.log("delete selected_behavior",selected_behavior);
+        OnModelChanged();
+    });
+}
+
 function create_new_concept() {
     var selected_concept_key = $('#cm_concepts').val();
     var selected_concept = null;
@@ -32,59 +103,45 @@ function create_new_concept() {
             OnModelChanged();
         });
 
+        // taking care of those which are preselected
+        var p = null;
+        for (p in selected_concept.properties){
+            if(selected_concept.properties[p].selected){
+                handle_property_events(selected_concept, p);
+            }
+        }
+
         $("#sel_prop_"+selected_concept.elementID).change(function () {
             var selected_prop_key = $("#sel_prop_"+selected_concept.elementID).val();
-            var selected_property = selected_concept.properties[selected_prop_key];
-            $("#sel_prop_" + selected_concept.elementID + " option[value='"+ selected_prop_key +"']").hide();
-            $("#sel_prop_" + selected_concept.elementID + " option[value='']").prop('selected', true);
-            // add prop row
-            // check prop delete handler
-            // upon delete make prop reappear in the list and delete prop row
-            var $container_prop_row = $("#row_prop_"+selected_concept.elementID);
-            var html = new EJS({url: 'modules/conceptual_model/template_prop_row.ejs'}).render(selected_property);
-            $container_prop_row.append(html);
-            selected_property.selected = true;
-            console.log("selected_property",selected_property);
-            $("#delete_"+selected_property.elementID).click(function () {
-                $("#"+selected_property.elementID).remove();
-                $("#sel_prop_" + selected_concept.elementID + " option[value='"+ selected_prop_key +"']").show();
-                selected_property.selected = false;
-                console.log("delete selected_property",selected_property);
-                OnModelChanged();
-            });
-            OnModelChanged();
+            handle_property_events(selected_concept, selected_prop_key);
         });
+
 
 
         $("#sel_be_"+selected_concept.elementID).change(function () {
             var selected_behavior_key = $("#sel_be_"+selected_concept.elementID).val();
-            var selected_behavior = selected_concept.behaviors[selected_behavior_key];
-            $("#sel_be_" + selected_concept.elementID + " option[value='"+ selected_behavior_key +"']").hide();
-            $("#sel_be_" + selected_concept.elementID + " option[value='']").prop('selected', true);
-            // add prop row
-            // check prop delete handler
-            // upon delete make prop reappear in the list and delete prop row
-            var $container_be_row = $("#row_be_"+selected_concept.elementID);
-            var html = new EJS({url: 'modules/conceptual_model/template_prop_row.ejs'}).render(selected_behavior);
-            $container_be_row.append(html);
-            selected_behavior.selected = true;
-            console.log("selected_behavior",selected_behavior);
-            $("#delete_"+selected_behavior.elementID).click(function () {
-                $("#"+selected_behavior.elementID).remove();
-                $("#sel_be_" + selected_concept.elementID + " option[value='"+ selected_behavior_key +"']").show();
-                selected_behavior.selected = false;
-                console.log("delete selected_behavior",selected_behavior);
-                OnModelChanged();
-            });
+            handle_behavior_events(selected_concept, selected_behavior_key);
             OnModelChanged();
         });
+
+
+        // taking care of those which are preselected
+        var p = null;
+        for (var p in selected_concept.behaviors){
+            if(selected_concept.behaviors[p].selected){
+                handle_behavior_events(selected_concept, p);
+            }
+        }
+
+
         OnModelChanged();
     }
+    return selected_concept;
 }
 
 function OnModelChanged() {
     console.log("OnModelChanged");
-    updateComputationalModel(concepts.environment, concepts.agents, concepts.rules);
+    updateComputationalModel();
 }
 function OnViewLoaded() {
     populate_view();
