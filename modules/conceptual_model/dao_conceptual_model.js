@@ -4,7 +4,9 @@
 
 var concepts = null;
 function dao_conceptual_model() {
-    $.getJSON('modules/conceptual_model/default_concepts.json', function (data) {
+    data_path = 'modules/conceptual_model/default_concepts.json';
+    // data_path = 'modules/conceptual_model/default_concepts _preselected.json';
+    $.getJSON(data_path, function (data) {
         console.log("conceptual model data:")
         console.log(data);
         concepts = data

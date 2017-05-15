@@ -77,7 +77,56 @@ function handle_behavior_events(selected_concept, selected_behavior_key) {
     });
 }
 
-function create_new_concept() {
+function create_new_concept(selected_concept_key, selected_concept) {
+    selected_concept.selected = true;
+    console.log("creating new concept: " + selected_concept);
+    data = {};
+    data.concept = selected_concept;
+    var html = new EJS({url: 'modules/conceptual_model/template_concept.ejs'}).render(data);
+    var $concept_container = $('#concept_container');
+    $concept_container.append(html);
+    $("#cm_concepts option[value='"+ selected_concept_key +"']").hide();
+    $("#cm_concepts option[value='']").prop('selected', true);
+    $("#delete_"+selected_concept.elementID).click(function () {
+        $("#"+selected_concept.elementID).remove();
+        $("#cm_concepts option[value='"+ selected_concept_key +"']").show();
+        selected_concept.selected = false;
+        console.log("delete selected_concept",selected_concept);
+        OnModelChanged();
+    });
+
+    // taking care of those which are preselected
+    var p = null;
+    for (p in selected_concept.properties){
+        if(selected_concept.properties[p].selected){
+            handle_property_events(selected_concept, p);
+        }
+    }
+
+    $("#sel_prop_"+selected_concept.elementID).change(function () {
+        var selected_prop_key = $("#sel_prop_"+selected_concept.elementID).val();
+        handle_property_events(selected_concept, selected_prop_key);
+    });
+
+
+
+    $("#sel_be_"+selected_concept.elementID).change(function () {
+        var selected_behavior_key = $("#sel_be_"+selected_concept.elementID).val();
+        handle_behavior_events(selected_concept, selected_behavior_key);
+        OnModelChanged();
+    });
+
+
+    // taking care of those which are preselected
+    var p = null;
+    for (var p in selected_concept.behaviors){
+        if(selected_concept.behaviors[p].selected){
+            handle_behavior_events(selected_concept, p);
+        }
+    }
+}
+
+function check_then_create_concept() {
     var selected_concept_key = $('#cm_concepts').val();
     var selected_concept = null;
     if( selected_concept_key in concepts.environment ){
@@ -86,54 +135,7 @@ function create_new_concept() {
         selected_concept = concepts.agents[selected_concept_key];
     }
     if(selected_concept !== null){
-        selected_concept.selected = true;
-        console.log("creating new concept: " + selected_concept);
-        data = {};
-        data.concept = selected_concept;
-        var html = new EJS({url: 'modules/conceptual_model/template_concept.ejs'}).render(data);
-        var $concept_container = $('#concept_container');
-        $concept_container.append(html);
-        $("#cm_concepts option[value='"+ selected_concept_key +"']").hide();
-        $("#cm_concepts option[value='']").prop('selected', true);
-        $("#delete_"+selected_concept.elementID).click(function () {
-            $("#"+selected_concept.elementID).remove();
-            $("#cm_concepts option[value='"+ selected_concept_key +"']").show();
-            selected_concept.selected = false;
-            console.log("delete selected_concept",selected_concept);
-            OnModelChanged();
-        });
-
-        // taking care of those which are preselected
-        var p = null;
-        for (p in selected_concept.properties){
-            if(selected_concept.properties[p].selected){
-                handle_property_events(selected_concept, p);
-            }
-        }
-
-        $("#sel_prop_"+selected_concept.elementID).change(function () {
-            var selected_prop_key = $("#sel_prop_"+selected_concept.elementID).val();
-            handle_property_events(selected_concept, selected_prop_key);
-        });
-
-
-
-        $("#sel_be_"+selected_concept.elementID).change(function () {
-            var selected_behavior_key = $("#sel_be_"+selected_concept.elementID).val();
-            handle_behavior_events(selected_concept, selected_behavior_key);
-            OnModelChanged();
-        });
-
-
-        // taking care of those which are preselected
-        var p = null;
-        for (var p in selected_concept.behaviors){
-            if(selected_concept.behaviors[p].selected){
-                handle_behavior_events(selected_concept, p);
-            }
-        }
-
-
+        create_new_concept(selected_concept_key, selected_concept);
         OnModelChanged();
     }
     return selected_concept;
@@ -145,8 +147,27 @@ function OnModelChanged() {
 }
 function OnViewLoaded() {
     populate_view();
+
+    var preselected_models = false;
+    for(var k in concepts.environment){
+        if(concepts.environment[k].selected) {
+            create_new_concept(k, concepts.environment[k]);
+            preselected_models = true;
+        }
+    }
+    for(var k in concepts.agents){
+        if(concepts.agents[k].selected) {
+            create_new_concept(k, concepts.agents[k]);
+            preselected_models = true;
+        }
+    }
+
+    if(preselected_models)
+        OnModelChanged();
+
+
     $("#cm_create_concept").click(function () {
-        create_new_concept();
+        check_then_create_concept();
     });
 }
 
